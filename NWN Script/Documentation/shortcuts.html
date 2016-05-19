@@ -1,0 +1,112 @@
+<html>
+<head>
+
+	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+
+	<style>
+		ul{
+			display: inline-block;
+			padding: 5px;
+			background: whitesmoke;
+		}
+		li {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		
+		table {
+			border-collapse: collapse;
+		}
+		
+		.odd {
+			background: #CCC;
+		}
+		
+		.even {
+			background: whitesmoke;
+		}
+	</style>
+	
+	<script>
+		$( function(){
+			$("table tr:nth-child(even)").addClass("even");
+			$("table tr:nth-child(odd)").addClass("odd");
+		});
+	</script>
+</head>
+<body>
+<h2>Keyboard Shortcuts</h2>
+<div>
+	
+	I have tried to include as many helpful keyboard shortcuts that I can think of that will help during the scripting process so the user can spend more time in thier scripts and less time in the menus<br />
+	<br />
+	Below you will find a list of all docuemnted shortcuts
+	<br /><br />
+	
+	<table>
+		<tr>
+			<td>
+				Ctrl + N
+			</td>
+			<td>
+				New file
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Ctrl + O
+			</td>
+			<td>
+				Open file
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Ctrl + S
+			</td>
+			<td>
+				Save file
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Ctrl + Shift + S
+			</td>
+			<td>
+				Save file as
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Ctrl + Shift + C
+			</td>
+			<td>
+				Compile file
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				Ctrl + F
+			</td>
+			<td>
+				Find in file
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				Ctrl + H
+			</td>
+			<td>
+				Find and Replace text in file
+			</td>
+		</tr>
+		
+	</table>
+	<br />
+	
+</div>
+</body>
+</html>

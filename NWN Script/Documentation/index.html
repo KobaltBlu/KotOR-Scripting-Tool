@@ -1,0 +1,102 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Kotor Scripting Tool - Documentation</title>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+
+<script>
+	$( function(){
+
+		$(".navigation li a").click( function(e){
+			e.preventDefault();
+
+			$("iframe").attr('src', $(this).attr('href'));
+		});
+	
+	});
+</script>
+
+<style>
+* {
+	padding: 0;
+	margin: 0;
+}
+html, body { height: 100%; width:100%; margin:0; padding:0; }
+
+body {
+	font-family: "lucida sans", verdana, arial, helvetica, sans-serif;
+	font-size: 75%;
+	overflow: hidden;
+}
+
+.navigation {
+	background: whitesmoke;
+	width: 200px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 200px;
+	bottom: 0;	
+	overflow-y: scroll;
+	padding: 5px;
+}
+
+.navigation ul {
+	margin-left: 5px;
+}
+
+.navigation ul li {
+	list-style: none;
+}
+
+.content {
+	position: absolute;
+	top: 0px;
+	left: 210px;
+	right: 0;
+	bottom: 0;
+	height: 100%;
+}
+
+iframe {
+	height: 100%;
+	width: 100%;
+	border: none;
+}
+
+
+</style>
+
+</head>
+<body>
+
+	<div class="contentBody">
+		<div class="navigation">
+			<ul>
+				<li>
+					<b>About</b>
+					<ul>
+						<li><a href="application.html">The Application</a></li>
+						<li><a href="editor.html">The Editor</a></li>
+						<li><a href="shortcuts.html">Keyboard Shortcuts</a></li>
+					</ul>
+				</li>
+
+				<li>
+					<b>How to</b>
+					<ul>
+						<li><a href="howtocompile.html">How to Compile</a></li>
+						<li><a href="howtoopen.html">How to Open</a></li>
+						<li><a href="find.html">How to Find</a></li>
+						<li><a href="findandreplace.html">How to Find and Replace</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="content">
+			<iframe src="application.html">Ooops your browser doesn't support Iframes.</iframe>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ScintillaNET>
+	<Language Name="default">
+		<Styles>
+			<Style Name="Default" FontName="Consolas" FontSize="3.25" ForeColor="BLACK" />
+		</Styles>
+	</Language>
+
+	<Language Name="cpp">
+		<Indentation TabWidth="2" UseTabs="false"/>
+		<Lexer StreamCommentPrefix="{ " StreamCommentSuffix=" }">
+			<Keywords List="0">int string void object action float vector location event effect if else true false while</Keywords>
+		</Lexer>
+		<Styles>
+
+			<Style Name="KEYWORD" ForeColor="BLUE" />
+			<Style Name="NUMBER" ForeColor="PURPLE" />
+			<Style Name="STRING" ForeColor="PURPLE" />
+      <Style Name="VERBATIM" ForeColor="PURPLE" />
+      <Style Name="CLOSURE" ForeColor="PURPLE" />
+
+		</Styles>
+	</Language>
+</ScintillaNET>

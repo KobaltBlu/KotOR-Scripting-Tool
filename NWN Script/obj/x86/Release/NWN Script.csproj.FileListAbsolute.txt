@@ -1,0 +1,130 @@
+C:\Users\James\documents\visual studio 2010\Projects\NWN Script\NWN Script\bin\Release\nwnnsscomp.exe
+C:\Users\James\documents\visual studio 2010\Projects\NWN Script\NWN Script\bin\Release\ScintillaNET.dll
+C:\Users\James\documents\visual studio 2010\Projects\NWN Script\NWN Script\bin\Release\ScintillaNET.pdb
+C:\Users\James\documents\visual studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\James\documents\visual studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.Properties.Resources.resources
+C:\Users\James\documents\visual studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Users\James\documents\visual studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\GenerateResource.write.1.tlog
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\ScintillaNET.xml
+C:\Users\James\documents\visual studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.ConstantsForm.resources
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\SciLexer.dll
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\SciLexer64.dll
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Kotor Scripting Tool.exe.config
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Kotor Scripting Tool.exe.manifest
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Kotor Scripting Tool.application
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Kotor Scripting Tool.exe
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.SplashWindow.resources
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\Kotor Scripting Tool.exe.manifest
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\Kotor Scripting Tool.application
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\Kotor Scripting Tool.exe
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\application.html
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\editor.html
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\howtocompile.html
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\howtoopen.html
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\menubar-sml.jpg
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\menubar.jpg
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\T3M4portrait.jpg
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\theeditor-sml.jpg
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\theeditor.jpg
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\index.html
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.FindAndReplace.resources
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.FindWindow.resources
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.HelpWindow.resources
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.AboutBox.resources
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.ScriptEditorWindow.resources
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\js\jquery-1.7.2.min.js
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\nwscript-tsl.nss
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\nwscript-kotor.nss
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\FlawlessCode.dll
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\find.html
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\findandreplace.html
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\find-sml.jpg
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\find.jpg
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\findandreplace-sml.jpg
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\findandreplace.jpg
+C:\Users\James\Documents\Visual Studio 2010\Projects\NWN Script\NWN Script\bin\Release\Documentation\shortcuts.html
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\find.html
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\findandreplace.html
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\find-sml.jpg
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\find.jpg
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\findandreplace-sml.jpg
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\findandreplace.jpg
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\shortcuts.html
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\nwscript-kotor.nss
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\application.html
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\editor.html
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\howtocompile.html
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\howtoopen.html
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\menubar-sml.jpg
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\menubar.jpg
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\T3M4portrait.jpg
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\theeditor-sml.jpg
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\theeditor.jpg
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\index.html
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\js\jquery-1.7.2.min.js
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\nwnnsscomp.exe
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\SciLexer.dll
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\SciLexer64.dll
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\ScintillaNET.xml
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\nwscript-tsl.nss
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Kotor Scripting Tool.exe.config
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Kotor Scripting Tool.exe.manifest
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Kotor Scripting Tool.application
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Kotor Scripting Tool.exe
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\ResolveAssemblyReference.cache
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.FindAndReplace.resources
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.FindWindow.resources
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.HelpWindow.resources
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.SplashWindow.resources
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.AboutBox.resources
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.ConstantsForm.resources
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.ScriptEditorWindow.resources
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.Properties.Resources.resources
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\GenerateResource.read.1.tlog
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\GenerateResource.write.1.tlog
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\Kotor Scripting Tool.exe.manifest
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\Kotor Scripting Tool.application
+\\tsclient\C\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\Kotor Scripting Tool.exe
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Kotor Scripting Tool.exe.config
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\Kotor Scripting Tool.exe
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\find.html
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\findandreplace.html
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\find-sml.jpg
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\find.jpg
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\findandreplace-sml.jpg
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\findandreplace.jpg
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\shortcuts.html
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\nwscript-kotor.nss
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\application.html
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\editor.html
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\howtocompile.html
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\howtoopen.html
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\menubar-sml.jpg
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\menubar.jpg
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\T3M4portrait.jpg
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\theeditor-sml.jpg
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\images\theeditor.jpg
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\index.html
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Documentation\js\jquery-1.7.2.min.js
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\nwnnsscomp.exe
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\SciLexer.dll
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\SciLexer64.dll
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\ScintillaNET.xml
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\nwscript-tsl.nss
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Resources\icon.ico
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Kotor Scripting Tool.exe.manifest
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Kotor Scripting Tool.application
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\Kotor Scripting Tool.exe
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN Script.csprojResolveAssemblyReference.cache
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.FindAndReplace.resources
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.FindWindow.resources
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.HelpWindow.resources
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.SplashWindow.resources
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.AboutBox.resources
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.ConstantsForm.resources
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.ScriptEditorWindow.resources
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN_Script.Properties.Resources.resources
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\NWN Script.csproj.GenerateResource.Cache
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\Kotor Scripting Tool.exe.manifest
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Release\Kotor Scripting Tool.application
+C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Release\FlawlessCode.dll
