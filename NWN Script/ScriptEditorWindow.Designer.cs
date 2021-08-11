@@ -29,12 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            //System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScriptEditorWindow));
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btn_QuickCompile = new System.Windows.Forms.Button();
             this.functionSearch = new System.Windows.Forms.TextBox();
-            this.functionInfoView = new ScintillaNET.Scintilla();
             this.scriptTabs = new System.Windows.Forms.TabControl();
             this.button2 = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -82,6 +80,9 @@
             this.showFunctionListToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.showFunctionInfoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.showAutoCompleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spacingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spacingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.spacingToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,9 +99,6 @@
             this.kOTORIIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showFunctionListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showFunctionInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.spacingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.spacingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.spacingToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -115,13 +113,13 @@
             // 
             // listBox1
             // 
-            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(4, 52);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(178, 251);
+            this.listBox1.Size = new System.Drawing.Size(280, 433);
             this.listBox1.TabIndex = 3;
             this.listBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseClick);
             this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
@@ -140,7 +138,7 @@
             // btn_QuickCompile
             // 
             this.btn_QuickCompile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_QuickCompile.Location = new System.Drawing.Point(612, 70);
+            this.btn_QuickCompile.Location = new System.Drawing.Point(990, 143);
             this.btn_QuickCompile.Name = "btn_QuickCompile";
             this.btn_QuickCompile.Size = new System.Drawing.Size(84, 23);
             this.btn_QuickCompile.TabIndex = 6;
@@ -150,35 +148,13 @@
             // 
             // functionSearch
             // 
-            this.functionSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.functionSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.functionSearch.Location = new System.Drawing.Point(4, 26);
             this.functionSearch.Name = "functionSearch";
-            this.functionSearch.Size = new System.Drawing.Size(178, 20);
+            this.functionSearch.Size = new System.Drawing.Size(280, 20);
             this.functionSearch.TabIndex = 7;
             this.functionSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.functionSearch_KeyUp);
-            // 
-            // functionInfo
-            // 
-            this.functionInfoView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.functionInfoView.ConfigurationManager.CustomLocation = "ScintillaNET.xml";
-            this.functionInfoView.ConfigurationManager.Language = "cpp";
-            this.functionInfoView.IsReadOnly = true;
-            this.functionInfoView.Location = new System.Drawing.Point(0, 0);
-            this.functionInfoView.Name = "functionInfo Window";
-            this.functionInfoView.Size = new System.Drawing.Size(517, 96);
-            this.functionInfoView.Styles.BraceBad.Size = 6F;
-            this.functionInfoView.Styles.BraceLight.Size = 6F;
-            this.functionInfoView.Styles.ControlChar.Size = 6F;
-            this.functionInfoView.Styles.Default.BackColor = System.Drawing.SystemColors.Window;
-            this.functionInfoView.Styles.Default.Size = 6F;
-            this.functionInfoView.Styles.IndentGuide.Size = 6F;
-            this.functionInfoView.Styles.LastPredefined.Size = 6F;
-            this.functionInfoView.Styles.LineNumber.Size = 6F;
-            this.functionInfoView.Styles.Max.Size = 6F;
-            this.functionInfoView.TabIndex = 11;
             // 
             // scriptTabs
             // 
@@ -186,7 +162,7 @@
             this.scriptTabs.Location = new System.Drawing.Point(0, 0);
             this.scriptTabs.Name = "scriptTabs";
             this.scriptTabs.SelectedIndex = 0;
-            this.scriptTabs.Size = new System.Drawing.Size(517, 304);
+            this.scriptTabs.Size = new System.Drawing.Size(793, 497);
             this.scriptTabs.TabIndex = 12;
             this.scriptTabs.SelectedIndexChanged += new System.EventHandler(this.scriptTabs_SelectedIndexChanged);
             this.scriptTabs.MouseClick += new System.Windows.Forms.MouseEventHandler(this.scriptTabs_MouseClick);
@@ -194,7 +170,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(612, 41);
+            this.button2.Location = new System.Drawing.Point(990, 114);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(84, 23);
             this.button2.TabIndex = 14;
@@ -217,11 +193,10 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.BackColor = System.Drawing.Color.Transparent;
-            this.splitContainer1.Panel2.Controls.Add(this.functionInfoView);
             this.splitContainer1.Panel2.Controls.Add(this.button2);
             this.splitContainer1.Panel2.Controls.Add(this.btn_QuickCompile);
-            this.splitContainer1.Size = new System.Drawing.Size(708, 418);
-            this.splitContainer1.SplitterDistance = 304;
+            this.splitContainer1.Size = new System.Drawing.Size(1086, 684);
+            this.splitContainer1.SplitterDistance = 497;
             this.splitContainer1.TabIndex = 15;
             // 
             // splitContainer2
@@ -239,8 +214,8 @@
             this.splitContainer2.Panel2.Controls.Add(this.label1);
             this.splitContainer2.Panel2.Controls.Add(this.listBox1);
             this.splitContainer2.Panel2.Controls.Add(this.functionSearch);
-            this.splitContainer2.Size = new System.Drawing.Size(708, 304);
-            this.splitContainer2.SplitterDistance = 517;
+            this.splitContainer2.Size = new System.Drawing.Size(1086, 497);
+            this.splitContainer2.SplitterDistance = 793;
             this.splitContainer2.TabIndex = 0;
             // 
             // aboutToolStripMenuItem
@@ -366,7 +341,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(708, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1086, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -413,8 +388,8 @@
             // saveAsToolStripMenuItem1
             // 
             this.saveAsToolStripMenuItem1.Name = "saveAsToolStripMenuItem1";
-            this.saveAsToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.S)));
+            this.saveAsToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
             this.saveAsToolStripMenuItem1.Size = new System.Drawing.Size(193, 22);
             this.saveAsToolStripMenuItem1.Text = "Save as";
             this.saveAsToolStripMenuItem1.Click += new System.EventHandler(this.saveAsToolStripMenuItem1_Click);
@@ -422,8 +397,8 @@
             // compileToolStripMenuItem2
             // 
             this.compileToolStripMenuItem2.Name = "compileToolStripMenuItem2";
-            this.compileToolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.C)));
+            this.compileToolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.C)));
             this.compileToolStripMenuItem2.Size = new System.Drawing.Size(193, 22);
             this.compileToolStripMenuItem2.Text = "Compile";
             this.compileToolStripMenuItem2.Click += new System.EventHandler(this.compileToolStripMenuItem2_Click);
@@ -531,7 +506,7 @@
             this.kOTORIToolStripMenuItem2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.kOTORIToolStripMenuItem2.Image = global::NWN_Script.Properties.Resources.k1;
             this.kOTORIToolStripMenuItem2.Name = "kOTORIToolStripMenuItem2";
-            this.kOTORIToolStripMenuItem2.Size = new System.Drawing.Size(122, 22);
+            this.kOTORIToolStripMenuItem2.Size = new System.Drawing.Size(118, 22);
             this.kOTORIToolStripMenuItem2.Text = "KOTOR I";
             this.kOTORIToolStripMenuItem2.Click += new System.EventHandler(this.kOTORIToolStripMenuItem2_Click);
             // 
@@ -539,7 +514,7 @@
             // 
             this.kOTORIIToolStripMenuItem2.Image = global::NWN_Script.Properties.Resources.k2;
             this.kOTORIIToolStripMenuItem2.Name = "kOTORIIToolStripMenuItem2";
-            this.kOTORIIToolStripMenuItem2.Size = new System.Drawing.Size(122, 22);
+            this.kOTORIIToolStripMenuItem2.Size = new System.Drawing.Size(118, 22);
             this.kOTORIIToolStripMenuItem2.Text = "KOTOR II";
             this.kOTORIIToolStripMenuItem2.Click += new System.EventHandler(this.kOTORIIToolStripMenuItem2_Click);
             // 
@@ -574,6 +549,31 @@
             this.showAutoCompleteToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.showAutoCompleteToolStripMenuItem.Text = "Show AutoComplete";
             this.showAutoCompleteToolStripMenuItem.Click += new System.EventHandler(this.showAutoCompleteToolStripMenuItem_Click);
+            // 
+            // spacingToolStripMenuItem
+            // 
+            this.spacingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.spacingToolStripMenuItem1,
+            this.spacingToolStripMenuItem2});
+            this.spacingToolStripMenuItem.Name = "spacingToolStripMenuItem";
+            this.spacingToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.spacingToolStripMenuItem.Text = "Tab Spacing";
+            // 
+            // spacingToolStripMenuItem1
+            // 
+            this.spacingToolStripMenuItem1.Checked = true;
+            this.spacingToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.spacingToolStripMenuItem1.Name = "spacingToolStripMenuItem1";
+            this.spacingToolStripMenuItem1.Size = new System.Drawing.Size(119, 22);
+            this.spacingToolStripMenuItem1.Text = "2 Spaces";
+            this.spacingToolStripMenuItem1.Click += new System.EventHandler(this.spacingToolStripMenuItem1_Click);
+            // 
+            // spacingToolStripMenuItem2
+            // 
+            this.spacingToolStripMenuItem2.Name = "spacingToolStripMenuItem2";
+            this.spacingToolStripMenuItem2.Size = new System.Drawing.Size(119, 22);
+            this.spacingToolStripMenuItem2.Text = "4 Spaces";
+            this.spacingToolStripMenuItem2.Click += new System.EventHandler(this.spacingToolStripMenuItem2_Click);
             // 
             // aboutToolStripMenuItem1
             // 
@@ -634,8 +634,8 @@
             // compileToolStripMenuItem
             // 
             this.compileToolStripMenuItem.Name = "compileToolStripMenuItem";
-            this.compileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
-                        | System.Windows.Forms.Keys.C)));
+            this.compileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.C)));
             this.compileToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.compileToolStripMenuItem.Text = "Compile";
             this.compileToolStripMenuItem.Click += new System.EventHandler(this.compileToolStripMenuItem_Click);
@@ -716,39 +716,12 @@
             this.showFunctionInfoToolStripMenuItem.Text = "Show Function Info";
             this.showFunctionInfoToolStripMenuItem.Click += new System.EventHandler(this.showFunctionInfoToolStripMenuItem_Click);
             // 
-            // spacingToolStripMenuItem
-            // 
-            this.spacingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.spacingToolStripMenuItem1,
-            this.spacingToolStripMenuItem2});
-            this.spacingToolStripMenuItem.Name = "spacingToolStripMenuItem";
-            this.spacingToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.spacingToolStripMenuItem.Text = "Tab Spacing";
-            // 
-            // spacingToolStripMenuItem1
-            // 
-            this.spacingToolStripMenuItem1.Checked = true;
-            this.spacingToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
-            //this.spacingToolStripMenuItem1.Image = global::NWN_Script.Properties.Resources.k1;
-            this.spacingToolStripMenuItem1.Name = "spacingToolStripMenuItem1";
-            this.spacingToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
-            this.spacingToolStripMenuItem1.Text = "2 Spaces";
-            this.spacingToolStripMenuItem1.Click += new System.EventHandler(this.spacingToolStripMenuItem1_Click);
-            // 
-            // spacingToolStripMenuItem2
-            // 
-            //this.spacingToolStripMenuItem2.Image = global::NWN_Script.Properties.Resources.k2;
-            this.spacingToolStripMenuItem2.Name = "spacingToolStripMenuItem2";
-            this.spacingToolStripMenuItem2.Size = new System.Drawing.Size(122, 22);
-            this.spacingToolStripMenuItem2.Text = "4 Spaces";
-            this.spacingToolStripMenuItem2.Click += new System.EventHandler(this.spacingToolStripMenuItem2_Click);
-            // 
             // ScriptEditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(708, 442);
+            this.ClientSize = new System.Drawing.Size(1086, 708);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = global::NWN_Script.Properties.Resources.icon2;

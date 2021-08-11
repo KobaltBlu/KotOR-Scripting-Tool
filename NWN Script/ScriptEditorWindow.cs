@@ -454,6 +454,8 @@ namespace NWN_Script
         public ScriptEditorWindow()
         {
             InitializeComponent();
+
+            functionInfoView = new ScintillaNET.Scintilla();
         }
 
 
@@ -491,6 +493,30 @@ namespace NWN_Script
             this.WindowState = FormWindowState.Normal;
 
             UpdateTabSpacing();
+            // 
+            // functionInfo
+            // 
+            functionInfoView.Anchor = ((((AnchorStyles.Top | AnchorStyles.Bottom)
+                        | AnchorStyles.Left)
+                        | AnchorStyles.Right));
+            functionInfoView.ConfigurationManager.CustomLocation = "ScintillaNET.xml";
+            functionInfoView.ConfigurationManager.Language = "cpp";
+            functionInfoView.IsReadOnly = true;
+            functionInfoView.Location = new Point(0, 0);
+            functionInfoView.Name = "functionInfo Window";
+            functionInfoView.Size = new Size(517, 96);
+            functionInfoView.Styles.BraceBad.Size = 6F;
+            functionInfoView.Styles.BraceLight.Size = 6F;
+            functionInfoView.Styles.ControlChar.Size = 6F;
+            functionInfoView.Styles.Default.BackColor = SystemColors.Window;
+            functionInfoView.Styles.Default.Size = 6F;
+            functionInfoView.Styles.IndentGuide.Size = 6F;
+            functionInfoView.Styles.LastPredefined.Size = 6F;
+            functionInfoView.Styles.LineNumber.Size = 6F;
+            functionInfoView.Styles.Max.Size = 6F;
+            functionInfoView.TabIndex = 11;
+            splitContainer1.Panel2.Controls.Add(functionInfoView);
+            splitContainer1.Panel2.Controls.SetChildIndex(functionInfoView, 0);
 
             //FileAssociation.Associate(".nss", "nss.nwscript", "SWKotOR Script Source", "\\Resources\\icon.ico", "Kotor Scripting Tool.exe");
             //FileAssociation.Associate(".ncs", "ncs.nwscript", "SWKotOR Script Compiled", "\\Resources\\icon.ico", "Kotor Scripting Tool.exe");
