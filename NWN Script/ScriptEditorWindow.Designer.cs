@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScriptEditorWindow));
+            //System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScriptEditorWindow));
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btn_QuickCompile = new System.Windows.Forms.Button();
@@ -98,6 +98,9 @@
             this.kOTORIIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showFunctionListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showFunctionInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spacingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spacingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.spacingToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -162,7 +165,6 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.functionInfoView.ConfigurationManager.CustomLocation = "ScintillaNET.xml";
             this.functionInfoView.ConfigurationManager.Language = "cpp";
-            //this.functionInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.functionInfoView.IsReadOnly = true;
             this.functionInfoView.Location = new System.Drawing.Point(0, 0);
             this.functionInfoView.Name = "functionInfo Window";
@@ -508,7 +510,8 @@
             this.toolStripSeparator4,
             this.showFunctionListToolStripMenuItem1,
             this.showFunctionInfoToolStripMenuItem1,
-            this.showAutoCompleteToolStripMenuItem});
+            this.showAutoCompleteToolStripMenuItem,
+            this.spacingToolStripMenuItem});
             this.optionsToolStripMenuItem2.Name = "optionsToolStripMenuItem2";
             this.optionsToolStripMenuItem2.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem2.Text = "Options";
@@ -713,6 +716,33 @@
             this.showFunctionInfoToolStripMenuItem.Text = "Show Function Info";
             this.showFunctionInfoToolStripMenuItem.Click += new System.EventHandler(this.showFunctionInfoToolStripMenuItem_Click);
             // 
+            // spacingToolStripMenuItem
+            // 
+            this.spacingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.spacingToolStripMenuItem1,
+            this.spacingToolStripMenuItem2});
+            this.spacingToolStripMenuItem.Name = "spacingToolStripMenuItem";
+            this.spacingToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.spacingToolStripMenuItem.Text = "Tab Spacing";
+            // 
+            // spacingToolStripMenuItem1
+            // 
+            this.spacingToolStripMenuItem1.Checked = true;
+            this.spacingToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
+            //this.spacingToolStripMenuItem1.Image = global::NWN_Script.Properties.Resources.k1;
+            this.spacingToolStripMenuItem1.Name = "spacingToolStripMenuItem1";
+            this.spacingToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
+            this.spacingToolStripMenuItem1.Text = "2 Spaces";
+            this.spacingToolStripMenuItem1.Click += new System.EventHandler(this.spacingToolStripMenuItem1_Click);
+            // 
+            // spacingToolStripMenuItem2
+            // 
+            //this.spacingToolStripMenuItem2.Image = global::NWN_Script.Properties.Resources.k2;
+            this.spacingToolStripMenuItem2.Name = "spacingToolStripMenuItem2";
+            this.spacingToolStripMenuItem2.Size = new System.Drawing.Size(122, 22);
+            this.spacingToolStripMenuItem2.Text = "4 Spaces";
+            this.spacingToolStripMenuItem2.Click += new System.EventHandler(this.spacingToolStripMenuItem2_Click);
+            // 
             // ScriptEditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -771,6 +801,9 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ToolStripMenuItem showFunctionListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showFunctionInfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem spacingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem spacingToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem spacingToolStripMenuItem2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem1;

@@ -72,10 +72,8 @@
     <Reference Include="FlawlessCode">
       <HintPath>.\FlawlessCode.dll</HintPath>
     </Reference>
-    <Reference Include="ScintillaNET, Version=2.5.0.0, Culture=neutral, PublicKeyToken=948d6c9751444115, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\References\ScintillaNET\ScintillaNET.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ScintillaNET">
+      <HintPath>.\ScintillaNET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -167,9 +165,18 @@
     <Content Include="Documentation\shortcuts.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="nwscript-kotor.nss">
+    <Content Include="k1\nwnnsscomp.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="k2\nwnnsscomp.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="k1\nwscript.nss">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="k2\nwscript.nss">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Kotorfullboxart_sml.jpg" />
     <None Include="Resources\Editor_Splash_31.png" />
     <None Include="Resources\T3M4portrait.jpg" />
@@ -207,9 +214,6 @@
     <Content Include="Documentation\js\jquery-1.7.2.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="nwnnsscomp.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Resources\icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -221,6 +225,7 @@
     </Content>
     <Content Include="ScintillaNET.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Resources\header_gradient_blue.jpg" />
     <None Include="Resources\bluetoblue2.jpg" />
@@ -247,10 +252,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Content Include="nwscript-tsl.nss">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

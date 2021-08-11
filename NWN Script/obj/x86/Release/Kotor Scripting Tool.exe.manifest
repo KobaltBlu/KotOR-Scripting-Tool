@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Resources\icon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="KotOR Scripting Tool" version="0.1.4.0" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="KotOR Scripting Tool" version="0.1.5.0" language="neutral" processorArchitecture="x86" />
     <commandLine file="KotOR Scripting Tool.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -55,26 +55,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KotOR Scripting Tool.exe" size="766976">
-      <assemblyIdentity name="KotOR Scripting Tool" version="0.1.4.0" language="neutral" processorArchitecture="x86" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KotOR Scripting Tool.exe" size="754176">
+      <assemblyIdentity name="KotOR Scripting Tool" version="0.1.5.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>FK8cp23ctQTfzMCyaKSezQXNDLE=</dsig:DigestValue>
+        <dsig:DigestValue>aqIfIVKQpyHULoLEctPfhSWjngM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ScintillaNET.dll" size="573440">
-      <assemblyIdentity name="ScintillaNET" version="2.5.0.0" publicKeyToken="948D6C9751444115" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ScintillaNET.dll" size="588288">
+      <assemblyIdentity name="ScintillaNET" version="2.6.0.0" publicKeyToken="948D6C9751444115" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>xdoDPuo/0QpRV2KfHyThwpDVe7k=</dsig:DigestValue>
+        <dsig:DigestValue>fCQY/vZJM1JgTV6DIaas7CfFjDE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -240,40 +240,31 @@
       <dsig:DigestValue>kEdQi1Rq+D5tAxCTP/ahWkEaiNc=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="KotOR Scripting Tool.exe.config" size="183">
+  <file name="k1\nwnnsscomp.exe" size="212992">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>eIjfUMrEm6jPaRKg7ktLXWRnPQw=</dsig:DigestValue>
+      <dsig:DigestValue>3MKoJf6DGowShp7KA1o3SDI7ky4=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="nwnnsscomp.exe" size="266240">
+  <file name="k2\nwnnsscomp.exe" size="212992">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>REC2FjZ8Ly0b7vD4y7DFhdGkSTI=</dsig:DigestValue>
+      <dsig:DigestValue>3MKoJf6DGowShp7KA1o3SDI7ky4=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="nwscript-kotor.nss" size="216650">
+  <file name="KotOR Scripting Tool.exe.config" size="832">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>IjCKGA6pRIHOK449VzR2KjSSq58=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="nwscript-tsl.nss" size="266225">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>J0NkGFPg+Ri+UhGCSMgmTk8ReyA=</dsig:DigestValue>
+      <dsig:DigestValue>Y15LV67u+wwpiWTMoWWCXhyVlu0=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Resources\icon.ico" size="15086">
@@ -285,22 +276,22 @@
       <dsig:DigestValue>ObOpPjKNvqm6rP+pbG5mEPe7stM=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SciLexer.dll" size="648704">
+  <file name="SciLexer.dll" size="656896">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>N/Y2YO4tY901djeZjEhNotCATic=</dsig:DigestValue>
+      <dsig:DigestValue>GiMjvEMVciYOIuf1a1lz0KsLbAM=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SciLexer64.dll" size="908800">
+  <file name="SciLexer64.dll" size="925696">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>d1/zIzQqPixrhkAQzW+sbsRQ9MA=</dsig:DigestValue>
+      <dsig:DigestValue>ktR3bD8XZvyUUajjiLaHazuZxzU=</dsig:DigestValue>
     </hash>
   </file>
   <file name="ScintillaNET.xml" size="778" writeableType="applicationData">

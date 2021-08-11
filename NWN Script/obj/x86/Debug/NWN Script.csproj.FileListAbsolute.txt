@@ -239,3 +239,50 @@ C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x
 C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Debug\Kotor Scripting Tool.exe
 C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\obj\x86\Debug\Kotor Scripting Tool.pdb
 C:\Users\James\Documents\Visual Studio 2015\Projects\NWN Script\NWN Script\bin\Debug\Resources\icon.ico
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\find.html
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\findandreplace.html
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\images\find-sml.jpg
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\images\find.jpg
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\images\findandreplace-sml.jpg
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\images\findandreplace.jpg
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\shortcuts.html
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\k1\nwnnsscomp.exe
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\k2\nwnnsscomp.exe
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\application.html
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\editor.html
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\howtocompile.html
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\howtoopen.html
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\images\menubar-sml.jpg
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\images\menubar.jpg
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\images\T3M4portrait.jpg
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\images\theeditor-sml.jpg
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\images\theeditor.jpg
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\index.html
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Documentation\js\jquery-1.7.2.min.js
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\SciLexer.dll
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\SciLexer64.dll
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\ScintillaNET.xml
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\k1\nwscript.nss
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\k2\nwscript.nss
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Resources\icon.ico
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\KotOR Scripting Tool.exe.config
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\KotOR Scripting Tool.exe.manifest
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\KotOR Scripting Tool.application
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\KotOR Scripting Tool.exe
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\KotOR Scripting Tool.pdb
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\FlawlessCode.dll
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\ScintillaNET.dll
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN Script.csprojResolveAssemblyReference.cache
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN_Script.FindAndReplace.resources
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN_Script.FindWindow.resources
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN_Script.HelpWindow.resources
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN_Script.SplashWindow.resources
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN_Script.AboutBox.resources
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN_Script.ConstantsForm.resources
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN_Script.ScriptEditorWindow.resources
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN_Script.Properties.Resources.resources
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN Script.csproj.GenerateResource.Cache
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\KotOR Scripting Tool.exe.manifest
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\KotOR Scripting Tool.application
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\KotOR Scripting Tool.exe
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\KotOR Scripting Tool.pdb

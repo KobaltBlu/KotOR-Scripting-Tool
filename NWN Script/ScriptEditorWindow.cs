@@ -58,6 +58,8 @@ namespace NWN_Script
             newEditor.ConfigurationManager.Language = "cpp";
             newEditor.ConfigurationManager.Configure();
 
+            newEditor.Indentation.TabWidth = Properties.Settings.Default.TabWidth;
+
             newEditor.TextChanged += new EventHandler(scriptEditor_TextChanged);
             newEditor.KeyUp += new KeyEventHandler(scriptEditor_KeyUp);
             newEditor.AutoCompleteAccepted += new EventHandler<ScintillaNET.AutoCompleteAcceptedEventArgs>(scriptEditor_AutoCompleteAccepted);
@@ -144,10 +146,19 @@ namespace NWN_Script
                     string outPutPath = (((FileSettings)scriptTabs.SelectedTab.Tag).FilePath + Path.GetFileNameWithoutExtension(myPath)) + ".ncs";
                     string appPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
                     
+                    if(currentGame == 1)
+                    {
+                        nwnnsscomp.StartInfo.FileName = @"k1\nwnnsscomp.exe";
+                        MessageBox.Show("-c \"" + fileToCompile + "\"");
+                        nwnnsscomp.StartInfo.Arguments = "-c \"" + fileToCompile + "\"";
+                    }
+                    else
+                    {
+                        nwnnsscomp.StartInfo.FileName = @"k2\nwnnsscomp.exe";
+                        MessageBox.Show("-c \"" + fileToCompile + "\"");
+                        nwnnsscomp.StartInfo.Arguments = "-c \"" + fileToCompile + "\"";
+                    }
 
-                    nwnnsscomp.StartInfo.FileName = @"nwnnsscomp.exe";
-                    MessageBox.Show("-c -g " + currentGame + " \"" + fileToCompile + "\"");
-                    nwnnsscomp.StartInfo.Arguments = "-c -g "+currentGame+" \"" + fileToCompile + "\"";
                     nwnnsscomp.StartInfo.RedirectStandardOutput = true;
                     nwnnsscomp.StartInfo.UseShellExecute = false;
                     nwnnsscomp.Start();
@@ -196,11 +207,11 @@ namespace NWN_Script
             //string nssSource = "nwscript-kotor.nss";
             List<string> sourceList = new List<string>();
 
-            sourceList.Add("nwscript-kotor.nss");
-            sourceList.Add("nwscript-tsl.nss");
+            sourceList.Add("k1\\nwscript.nss");
+            sourceList.Add("k2\\nwscript.nss");
 
-            
 
+            int sourceIndex = 0;
             foreach (string nssSource in sourceList)
             {
                 using (StreamReader reader = new StreamReader(Application.StartupPath +@"\"+ nssSource))
@@ -305,8 +316,7 @@ namespace NWN_Script
                                 string Line = Regex.Match(line, @"([A-Z][a-zA-Z_]+|[a-z][0-9]+)+\(.*\);").Value;
                                 string About = string.Join("\r\n", about.ToArray());
                                 int LineNumber = counter;
-                                if (nssSource == "nwscript-kotor.nss")
-
+                                if (sourceIndex == 0)
                                 {
                                     FunctionsList_kotor.Add(new FunctionsListItem(Functtype, Name, Line, About, args, LineNumber));
                                 }
@@ -325,7 +335,7 @@ namespace NWN_Script
                     reader.DiscardBufferedData();
                     int lineNum = 0;
                     int maxLine = 1662;
-                    if (nssSource == "nwscript-tsl.nss")
+                    if (sourceIndex == 1)
                     {
                         maxLine = 2041;
                     }
@@ -339,7 +349,7 @@ namespace NWN_Script
                             Match match = Regex.Match(line, "(int|float)\\s*\\b([A-Z0-9_d]+)");
                             Match constant = Regex.Match(match.ToString(), "\\b([A-Z0-9_d]+)\\b");
 
-                            if (nssSource == "nwscript-kotor.nss")
+                            if (sourceIndex == 0)
                             {
                                 kotor_CONSTANTS.Add(constant.ToString());
                             }
@@ -353,7 +363,7 @@ namespace NWN_Script
                     }
                 }
 
-
+                sourceIndex++;
             }
             kotor_CONSTANTS.Sort();
             tsl_CONSTANTS.Sort();
@@ -443,11 +453,7 @@ namespace NWN_Script
 
         public ScriptEditorWindow()
         {
-            Thread t = new Thread(SplashScreen);
-            t.Start();
-            Thread.Sleep(3500);
             InitializeComponent();
-            t.Abort();
         }
 
 
@@ -480,9 +486,14 @@ namespace NWN_Script
             updateFormTitle();
             this.BringToFront();
             this.Focus();
+            this.BringToFront();
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
 
-            //FileAssociation.Associate(".nss", "nss.nwscript", "Neverwinter Nights Script Source", "\\Resources\\icon.ico", "Kotor Scripting Tool.exe");
-            //FileAssociation.Associate(".ncs", "ncs.nwscript", "Neverwinter Nights Script Compiled", "\\Resources\\icon.ico", "Kotor Scripting Tool.exe");
+            UpdateTabSpacing();
+
+            //FileAssociation.Associate(".nss", "nss.nwscript", "SWKotOR Script Source", "\\Resources\\icon.ico", "Kotor Scripting Tool.exe");
+            //FileAssociation.Associate(".ncs", "ncs.nwscript", "SWKotOR Script Compiled", "\\Resources\\icon.ico", "Kotor Scripting Tool.exe");
         }
 
 
@@ -564,6 +575,43 @@ namespace NWN_Script
         {
         }
 
+        private void spacingToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.TabWidth = 2;
+            Properties.Settings.Default.Save();
+            UpdateTabSpacing();
+        }
+
+        private void spacingToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.TabWidth = 4;
+            Properties.Settings.Default.Save();
+            UpdateTabSpacing();
+        }
+
+        private void UpdateTabSpacing()
+        {
+            if(Properties.Settings.Default.TabWidth == 2)
+            {
+                spacingToolStripMenuItem1.Checked = true;
+                spacingToolStripMenuItem2.Checked = false;
+            }
+            else
+            {
+                spacingToolStripMenuItem1.Checked = false;
+                spacingToolStripMenuItem2.Checked = true;
+            }
+
+            foreach (Control control in scriptTabs.SelectedTab.Controls)
+            {
+                if (control.GetType() == typeof(ScintillaNET.Scintilla))
+                {
+                    ScintillaNET.Scintilla tabEditor = (ScintillaNET.Scintilla)control;
+                    tabEditor.Indentation.TabWidth = Properties.Settings.Default.TabWidth;
+                }
+            }
+        }
+
         /*
          * OnDoubleClick Event for the ListBox
          */
@@ -587,8 +635,6 @@ namespace NWN_Script
                 tabEditor.InsertText(tabEditor.Caret.Anchor, item.Code + "\n");
                 tabEditor.Selection.Start = (tabEditor.Selection.Start + (item.Code.Length + 1));
             }
-
-
         }
 
         /*
@@ -627,55 +673,59 @@ namespace NWN_Script
 
         private void scriptEditor_KeyUp(object sender, KeyEventArgs e)
         {
+            try {
+                ScintillaNET.Scintilla CurrentEditor = GetSelectedEditor();
 
-            ScintillaNET.Scintilla CurrentEditor = GetSelectedEditor();
-
-            if ((e.KeyCode != Keys.Up) && (e.KeyCode != Keys.Down) && (e.KeyCode != Keys.Back) && allowAutoComplete)
-            {
-                CurrentEditor.AutoComplete.List.Clear();
-                CurrentEditor.AutoComplete.Dispose();
-
-                if (e.KeyCode != Keys.Enter)
+                if ((e.KeyCode != Keys.Up) && (e.KeyCode != Keys.Down) && (e.KeyCode != Keys.Back) && allowAutoComplete)
                 {
-                    string line = CurrentEditor.Lines.Current.Text;
+                    CurrentEditor.AutoComplete.List.Clear();
+                    CurrentEditor.AutoComplete.Dispose();
 
-                    int caret = (CurrentEditor.Lines.Current.SelectionStartPosition - CurrentEditor.Lines.Current.StartPosition);
-                    string lineReversed;
-                    if (line.Length > 1)
+                    if (e.KeyCode != Keys.Enter)
                     {
-                        lineReversed = StringHelper.ReverseString(line.Substring(0, caret));
-                    }
-                    else
-                    {
-                        lineReversed = line;
-                    }
+                        string line = CurrentEditor.Lines.Current.Text;
 
-                    Match functionMatch = Regex.Match(lineReversed, "(^[\\S][a-z0-9A-Z]+)\\b");
-
-                    foreach (FunctionsListItem item in FunctionsList)
-                    {
-
-
-                        if (item.Name.Contains(StringHelper.ReverseString(functionMatch.Value)) && functionMatch.Value != "")
+                        int caret = (CurrentEditor.Lines.Current.SelectionStartPosition - CurrentEditor.Lines.Current.StartPosition);
+                        string lineReversed;
+                        if (line.Length > 1)
                         {
-                            CurrentEditor.AutoComplete.List.Add(item.Name);
+                            lineReversed = StringHelper.ReverseString(line.Substring(0, caret));
+                        }
+                        else
+                        {
+                            lineReversed = line;
                         }
 
-                    }
+                        Match functionMatch = Regex.Match(lineReversed, "(^[\\S][a-z0-9A-Z]+)\\b");
 
-                    if (CurrentEditor.AutoComplete.List.Count > 0)
+                        foreach (FunctionsListItem item in FunctionsList)
+                        {
+
+
+                            if (item.Name.Contains(StringHelper.ReverseString(functionMatch.Value)) && functionMatch.Value != "")
+                            {
+                                CurrentEditor.AutoComplete.List.Add(item.Name);
+                            }
+
+                        }
+
+                        if (CurrentEditor.AutoComplete.List.Count > 0)
+                        {
+                            CurrentEditor.AutoComplete.Show();
+                            changeFunctionInfo(CurrentEditor.AutoComplete.SelectedText);
+                        }
+                    }
+                }
+                else
+                {
+                    if (CurrentEditor.AutoComplete.IsActive)
                     {
-                        CurrentEditor.AutoComplete.Show();
                         changeFunctionInfo(CurrentEditor.AutoComplete.SelectedText);
                     }
                 }
-            }
-            else
+            }catch(Exception exception)
             {
-                if (CurrentEditor.AutoComplete.IsActive)
-                {
-                    changeFunctionInfo(CurrentEditor.AutoComplete.SelectedText);                  
-                }
+
             }
         }
 
@@ -685,14 +735,17 @@ namespace NWN_Script
 
         private void listBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            functionInfoView.IsReadOnly = false;
-            string selected = listBox1.SelectedItem.ToString();
-            FunctionsListItem item = FunctionsList.Find(delegate(FunctionsListItem f) { return f.Name == selected; });
-            if (item != null)
+            if (listBox1.SelectedItem != null)
             {
-                functionInfoView.Text = item.About;
+                functionInfoView.IsReadOnly = false;
+                string selected = listBox1.SelectedItem.ToString();
+                FunctionsListItem item = FunctionsList.Find(delegate (FunctionsListItem f) { return f.Name == selected; });
+                if (item != null)
+                {
+                    functionInfoView.Text = item.About;
+                }
+                functionInfoView.IsReadOnly = true;
             }
-            functionInfoView.IsReadOnly = true;
 
         }
 
@@ -982,7 +1035,7 @@ namespace NWN_Script
         {
             //Stream myStream = null;
             OpenFileDialog OpenFile = new OpenFileDialog();
-            OpenFile.Filter = "Neverwinter Nights Source Script (*.nss*)|*.nss|Neverwinter Nights Compiled Script (*.ncs*)|*.ncs|Neverwinter Nights Script Files|*.nss;*.ncs|txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            OpenFile.Filter = "SWKotOR Source Script (*.nss*)|*.nss|SWKotOR Compiled Script (*.ncs*)|*.ncs|SWKotOR Script Files|*.nss;*.ncs|txt files (*.txt)|*.txt|All files (*.*)|*.*";
             OpenFile.FilterIndex = 3;
             OpenFile.Multiselect = true;
             if (OpenFile.ShowDialog() == DialogResult.OK)
@@ -1011,7 +1064,7 @@ namespace NWN_Script
             {
                 SaveFileDialog saveFile = new SaveFileDialog();
 
-                saveFile.Filter = "Neverwinter Nights Script Files (*.nss*)|*.nss|txt files (*.txt)|*.txt";
+                saveFile.Filter = "SWKotOR Script Files (*.nss*)|*.nss|txt files (*.txt)|*.txt";
                 if (saveFile.ShowDialog() == DialogResult.OK)
                 {
 
@@ -1041,7 +1094,7 @@ namespace NWN_Script
         {
             SaveFileDialog saveFile = new SaveFileDialog();
 
-            saveFile.Filter = "Neverwinter Nights Script Files (*.nss*)|*.nss|txt files (*.txt)|*.txt";
+            saveFile.Filter = "SWKotOR Script Files (*.nss*)|*.nss|txt files (*.txt)|*.txt";
             if (saveFile.ShowDialog() == DialogResult.OK)
             {
                 string myPath = saveFile.FileName;
@@ -1342,18 +1395,18 @@ namespace NWN_Script
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(GetSelectedEditor().Selection.Text);
+            System.Windows.Forms.Clipboard.SetText(GetSelectedEditor().Selection.Text);
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(GetSelectedEditor().Selection.Text);
+            System.Windows.Forms.Clipboard.SetText(GetSelectedEditor().Selection.Text);
             GetSelectedEditor().Selection.Text = "";
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GetSelectedEditor().Selection.Text = Clipboard.GetText();
+            GetSelectedEditor().Selection.Text = System.Windows.Forms.Clipboard.GetText();
         }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
