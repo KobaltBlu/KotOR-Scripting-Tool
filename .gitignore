@@ -1,5 +1,12 @@
 NWN Script/bin
 NWN Script/obj
+**/bin/Debug/
+**/bin/Release/
+**/obj/x86/Debug/
+**/obj/x86/Release/
+**/obj/x64/Debug/
+**/obj/x64/Release/
+
 .vs
 
 # Windows image file caches
@@ -54,3 +61,18 @@ NWN Script/obj/x86/Release/Kotor Scripting Tool.application
 NWN Script/obj/x86/Release/Kotor Scripting Tool.exe
 NWN Script/obj/x86/Release/Kotor Scripting Tool.exe.manifest
 NWN Script/obj/x86/Release/NWN Script.csproj.GenerateResource.Cache
+NWN Script/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+NWN Script/obj/x86/Debug/Kotor Scripting Tool.application
+NWN Script/obj/x86/Debug/Kotor Scripting Tool.exe
+NWN Script/obj/x86/Debug/Kotor Scripting Tool.exe.manifest
+NWN Script/obj/x86/Debug/Kotor Scripting Tool.pdb
+NWN Script/obj/x86/Debug/NWN Script.csproj.FileListAbsolute.txt
+NWN Script/obj/x86/Debug/NWN Script.csproj.GenerateResource.Cache
+NWN Script/obj/x86/Debug/TempPE/Properties.Resources.Designer.cs.dll
+NWN Script/obj/x86/Release/DesignTimeResolveAssemblyReferencesInput.cache
+NWN Script/obj/x86/Release/Kotor Scripting Tool.application
+NWN Script/obj/x86/Release/Kotor Scripting Tool.exe
+NWN Script/obj/x86/Release/Kotor Scripting Tool.exe.manifest
+NWN Script/obj/x86/Release/NWN Script.csproj.FileListAbsolute.txt
+NWN Script/obj/x86/Release/NWN Script.csproj.GenerateResource.Cache
+NWN Script/obj/x86/Release/NWN Script.csprojResolveAssemblyReference.cache

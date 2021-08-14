@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetroFramework.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +10,7 @@ using System.Windows.Forms;
 
 namespace NWN_Script
 {
-    public partial class FindWindow : Form
+    public partial class FindWindow : MetroForm
     {
         public event EventHandler FindEvent;
         public static bool bool_MatchCase = false;

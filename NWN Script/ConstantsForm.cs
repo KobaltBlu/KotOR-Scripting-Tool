@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetroFramework.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,17 +11,25 @@ using System.Windows.Forms;
 namespace NWN_Script
 {
 
-    public partial class ConstantsForm : Form
+    public partial class ConstantsForm : MetroForm
     {
         public string SelectedConstant { set; get; } // In .NET 3.0 or newer
         public ConstantsForm()
         {
             InitializeComponent();
 
-
-            foreach (string CONSTANT in ScriptEditorWindow.CONSTANTS_LIST)
+            if(ThemeManager.GetCurrentTheme() == 0)
             {
-                listBox1.Items.Add(CONSTANT);
+                Theme = MetroFramework.MetroThemeStyle.Light;
+            }
+            else
+            {
+                Theme = MetroFramework.MetroThemeStyle.Dark;
+            }
+
+            foreach (ConstantListItem constant in ScriptEditorWindow.ConstantsList)
+            {
+                listBox1.Items.Add(constant.Name);
             }
 
         }
@@ -38,11 +47,11 @@ namespace NWN_Script
             listBox1.Items.Clear();
 
 
-            foreach (string constant in ScriptEditorWindow.CONSTANTS_LIST)
+            foreach (ConstantListItem constant in ScriptEditorWindow.ConstantsList)
             {
-                if (constant.ToLower().Contains(constantsSearch.Text.ToLower()))
+                if (constant.Name.ToLower().Contains(constantsSearch.Text.ToLower()))
                 {
-                    listBox1.Items.Add(constant);
+                    listBox1.Items.Add(constant.Name);
                 }
             }
 

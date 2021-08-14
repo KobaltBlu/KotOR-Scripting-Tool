@@ -9,463 +9,204 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using MetroFramework.Forms;
 using System.Text.RegularExpressions;
 using System.Threading;
+using MetroFramework.Controls;
 
 namespace NWN_Script
 {
-    public partial class ScriptEditorWindow : Form
+    public partial class ScriptEditorWindow : MetroForm
     {
+
+        private string FormTitle = "KotOR Scripting Tool";
+        private int LastFindIndex = 0;
+        private bool allowAutoComplete = true;
+        public static List<FunctionsListItem> FunctionsList = new List<FunctionsListItem>();
+        public static List<ConstantListItem> ConstantsList = new List<ConstantListItem>();
+        System.Windows.Forms.Timer AutoSaveTimer = new System.Windows.Forms.Timer();
 
         //Splash Screen function
         private void SplashScreen()
         {
-            Application.Run(new SplashWindow());
+            SplashWindow theSplashForm = new SplashWindow();
+            //theSplashForm.ShowDialog();
         }
 
-        private string FormTitle = "KotOR Scripting Tool";
-
-
-        /* Helper Functions */
-        public ScintillaNET.Scintilla GetSelectedEditor()
+        private void UpdateFormTheme()
         {
-            ScintillaNET.Scintilla tabEditor = null;
-            foreach (Control control in scriptTabs.SelectedTab.Controls)
+            Theme = ThemeManager.GetMetroTheme();
+            metroStyleManager.Theme = ThemeManager.GetMetroTheme();
+
+            //functionInfoView.BackColor = Color.FromArgb(48, 48, 61);
+
+            listBox1.BackColor = ThemeManager.GetControlBackgroundColor();
+            ThemeManager.ConfigureScintillaControlTheme(functionInfoView);
+            foreach(EditorTabPage tab in scriptTabs.TabPages)
             {
-                if (control.GetType() == typeof(ScintillaNET.Scintilla))
+                ThemeManager.ConfigureScintillaControlTheme(tab.editor);
+                switch (ThemeManager.GetCurrentTheme())
                 {
-                    tabEditor = (ScintillaNET.Scintilla)control;
+                    case 0:
+                        tab.vScroll.Theme = MetroFramework.MetroThemeStyle.Light;
+                        tab.hScroll.Theme = MetroFramework.MetroThemeStyle.Light;
+                        break;
+                    case 1:
+                        tab.vScroll.Theme = MetroFramework.MetroThemeStyle.Dark;
+                        tab.hScroll.Theme = MetroFramework.MetroThemeStyle.Dark;
+                        break;
                 }
             }
 
-            return tabEditor;
+            //labelFunctions1.ForeColor = ThemeManager.GetControlForeColor();
+            functionSearch.BackColor = ThemeManager.GetControlAltBackgroundColor();
+            functionSearch.Refresh();
+
+            splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+
+            splitContainer1.Panel1.BackColor = ThemeManager.GetControlAltBackgroundColor();
+            splitContainer1.Panel2.BackColor = ThemeManager.GetControlAltBackgroundColor();
+            splitContainer2.Panel1.BackColor = ThemeManager.GetControlAltBackgroundColor();
+            splitContainer2.Panel2.BackColor = ThemeManager.GetControlAltBackgroundColor();
+
+            labelFunctionInfo.ForeColor = ThemeManager.GetControlForeColor();
+
+            lightModeToolStripMenuItem.Checked = ThemeManager.GetCurrentTheme() == 0;
+            darkModeToolStripMenuItem.Checked = ThemeManager.GetCurrentTheme() == 1;
+
+            switch (ThemeManager.GetCurrentTheme())
+            {
+                case 0:
+                    metroStyleManager.Style = MetroFramework.MetroColorStyle.Black;
+                    break;
+                case 1:
+                    metroStyleManager.Style = MetroFramework.MetroColorStyle.White;
+                    break;
+            }
+
+            this.Refresh();
+
         }
 
-        private void createNewPage()
+        //Creates and initializes new editor tab
+        private EditorTabPage CreateNewEditorTab( FileSettings fileSettings )
         {
-            TabPage newPage = new TabPage();
-            newPage.Text = "New Page";
-            newPage.Margin = new Padding(3);
-            newPage.Padding = new Padding(3);
-
-            //Text editor control
-            ScintillaNET.Scintilla newEditor = new ScintillaNET.Scintilla();
-            newPage.Controls.Add(newEditor);
-
-            newEditor.Name = "Editor";
-            newEditor.Dock = DockStyle.Fill;
-            newEditor.ConfigurationManager.CustomLocation = "ScintillaNET.xml";
-            newEditor.ConfigurationManager.Language = "cpp";
-            newEditor.ConfigurationManager.Configure();
-
-            newEditor.Indentation.TabWidth = Properties.Settings.Default.TabWidth;
-
-            newEditor.TextChanged += new EventHandler(scriptEditor_TextChanged);
-            newEditor.KeyUp += new KeyEventHandler(scriptEditor_KeyUp);
-            newEditor.AutoCompleteAccepted += new EventHandler<ScintillaNET.AutoCompleteAcceptedEventArgs>(scriptEditor_AutoCompleteAccepted);
-            newEditor.Scroll += new System.EventHandler<System.Windows.Forms.ScrollEventArgs>(scriptEditor_Scroll);
-            //newEditor.AnnotationChanged += new EventHandler<ScintillaNET.AnnotationChangedEventArgs>();
-
-            newEditor.Margins.Margin0.Width = 25;
-            newEditor.Margins.Margin2.Width = 20;
-
-            openedFile = null;
-
+            EditorTabPage newPage = new EditorTabPage(fileSettings);
             scriptTabs.TabPages.Add(newPage);
             scriptTabs.SelectedTab = newPage;
-
-            scriptTabs.SelectedTab.Tag = new FileSettings();
-
-            UpdateFileInfo();
-
-
-            ScintillaNET.Scintilla tabEditor = GetSelectedEditor();
-
-            tabEditor.Text = "void main(){\n\n\n\n}";
-            tabEditor.Focus();
-            tabEditor.Selection.Start = 14;
-
+            return newPage;
         }
 
+        //Updates the Forms Title with the current selected games name
         private void UpdateFormInfo()
         {
-            List<string> games = new List<string>();
-            games.Add("Kotor I");
-            games.Add("Kotor II");
-
-            this.Text = FormTitle+" - [" + games[currentGame - 1] + " Mode]";
-        }
-
-
-        private void UpdateFileInfo()
-        {
-            updateFormTitle();
-        }
-
-
-        private void updateFormTitle()
-        {
-
-            string fileName = ((FileSettings)scriptTabs.SelectedTab.Tag).FileName;
-
-            if (fileName == null)
+            if (GameManager.GetCurrentGame() != null)
             {
-                fileName = "New File";
-                
-            }
-
-            if (((FileSettings)scriptTabs.SelectedTab.Tag).UnsvedChanges)
-            {
-                scriptTabs.SelectedTab.Text = fileName + "* ";
+                this.Text = FormTitle + " - [" + GameManager.GetCurrentGame().Name + " Mode]";
+                this.Refresh();
             }
             else
             {
-                scriptTabs.SelectedTab.Text = fileName + " ";
+                //Oops we have a problem.
             }
         }
 
+        //Compiles the current tab's script
         private void CompileScript()
         {
-            string fileToCompile = ((FileSettings)scriptTabs.SelectedTab.Tag).CompleteFileName;
-
-            if (fileToCompile != null)
+            if (scriptTabs.SelectedTab != null)
             {
-                
-
-                using (StreamWriter outfile = new StreamWriter(fileToCompile))
-                {
-                    ScintillaNET.Scintilla tabEditor = GetSelectedEditor();
-                    outfile.Write(tabEditor.Text.ToString());
-
-                    outfile.Close();
-
-                    Process nwnnsscomp = new Process();
-
-                    string myPath = fileToCompile;
-                    string directoryName = Path.GetDirectoryName(myPath);
-                    string outPutPath = (((FileSettings)scriptTabs.SelectedTab.Tag).FilePath + Path.GetFileNameWithoutExtension(myPath)) + ".ncs";
-                    string appPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-                    
-                    if(currentGame == 1)
-                    {
-                        nwnnsscomp.StartInfo.FileName = @"k1\nwnnsscomp.exe";
-                        MessageBox.Show("-c \"" + fileToCompile + "\"");
-                        nwnnsscomp.StartInfo.Arguments = "-c \"" + fileToCompile + "\"";
-                    }
-                    else
-                    {
-                        nwnnsscomp.StartInfo.FileName = @"k2\nwnnsscomp.exe";
-                        MessageBox.Show("-c \"" + fileToCompile + "\"");
-                        nwnnsscomp.StartInfo.Arguments = "-c \"" + fileToCompile + "\"";
-                    }
-
-                    nwnnsscomp.StartInfo.RedirectStandardOutput = true;
-                    nwnnsscomp.StartInfo.UseShellExecute = false;
-                    nwnnsscomp.Start();
-
-                    MessageBox.Show(nwnnsscomp.StandardOutput.ReadToEnd());
-                }
-
+                EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+                tab.CompileFile();
             }
-            else
-            {
-                MessageBox.Show("Error: You must save your script before you compile.");
-            }
-        }
-
-        public class DarkColorTable : ProfessionalColorTable
-        {
-            public override Color MenuStripGradientBegin
-            {
-                get { return Color.FromArgb(128, Color.Black); }
-            }
-
-            public override Color MenuStripGradientEnd
-            {
-                get { return Color.FromArgb(128, Color.Black); }
-            }
-
-            public override Color ButtonSelectedHighlight
-            {
-                get { return Color.FromArgb(64, Color.Black); }
-            }
-
-            // etc
-        }
-
-        private class FileSettings
-        {
-            public string FileName = null;
-            public string CompleteFileName = null;
-            public bool UnsvedChanges = false;
-            public string FilePath = null;
-
-        }
-
-        private void ParseNSS()
-        {
-            //string nssSource = "nwscript-kotor.nss";
-            List<string> sourceList = new List<string>();
-
-            sourceList.Add("k1\\nwscript.nss");
-            sourceList.Add("k2\\nwscript.nss");
-
-
-            int sourceIndex = 0;
-            foreach (string nssSource in sourceList)
-            {
-                using (StreamReader reader = new StreamReader(Application.StartupPath +@"\"+ nssSource))
-                {
-
-                    string source = reader.ReadToEnd().ToString();
-                    string line;
-                    int counter = 0;
-
-                    reader.BaseStream.Position = 0;
-                    reader.DiscardBufferedData();
-
-                    List<string> sourcelist = source.Split(new[] { "\r\n" }, StringSplitOptions.None).ToList();
-                    sourcelist.Reverse();
-                    listBox1.Items.Clear();
-
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        string voidPattern = "^void.*\\(.*\\);";
-                        string objectPattern = "^int.*\\(.*\\);";
-                        string intPattern = "^object.*\\(.*\\);";
-                        string floatPattern = "^float.*\\(.*\\);";
-                        string effectPattern = "^effect.*\\(.*\\);";
-                        string eventPattern = "^event.*\\(.*\\);";
-                        string stringPattern = "^string.*\\(.*\\);";
-                        string vectorPattern = "^vector.*\\(.*\\);";
-                        string locationPattern = "^location.*\\(.*\\);";
-
-                        if(Regex.IsMatch(line, "^(effect|void|int|object|event|location|float|string|vector).*\\(.*\\);")){
-                            string Functtype = "";
-
-                            if (Regex.IsMatch(line, voidPattern))
-                            {
-                                Functtype = "void";
-                            }
-                            else if (Regex.IsMatch(line, intPattern))
-                            {
-                                Functtype = "int";
-                            }
-                            else if (Regex.IsMatch(line, objectPattern))
-                            {
-                                Functtype = "object";
-                            }
-                            else if (Regex.IsMatch(line, floatPattern))
-                            {
-                                Functtype = "float";
-                            }else if (Regex.IsMatch(line, effectPattern))
-                            {
-                                Functtype = "effect";
-                            }else if (Regex.IsMatch(line, eventPattern))
-                            {
-                                Functtype = "event";
-                            }else if (Regex.IsMatch(line, stringPattern))
-                            {
-                                Functtype = "string";
-                            }else if (Regex.IsMatch(line, vectorPattern))
-                            {
-                                Functtype = "vector";
-                            }else if (Regex.IsMatch(line, locationPattern))
-                            {
-                                Functtype = "location";
-                            }
-                            //Match match = Regex.Match(line, @"([A-Z][a-zA-Z_]+|[a-z][0-9]+)");
-                            Match match = Regex.Match(line, @"([a-zA-Z_0-9]+)\(");
-
-                            List<string> about = new List<string>();
-                            int index = sourcelist.FindIndex(f => f.ToString() == line);
-                            int i = index;
-                            while (sourcelist[i].ToString() != "")
-                            {
-                                about.Add(sourcelist[i].ToString());
-                                i++;
-                            }
-                            about.Reverse();
-
-                            /*
-                             * ARGS GRABBER
-                             * */
-
-                            //\(([^\)]+)\) //ARGS Inside Parentheses
-
-                            //\b(object|int|location|float|vector|string|effect)\b //ARGS
-
-                            List<string> args = new List<string>();
-
-                            Match lineParen = Regex.Match(line, "\\(([^\\)]+)\\)");
-
-                            MatchCollection match_args = Regex.Matches(lineParen.Value, "\\b(object|int|location|float|vector|string|effect)\\b");
-
-                            foreach (Match arg in match_args)
-                            {
-                                args.Add(arg.Value);
-                            }
-
-
-
-
-                            // Here we check the Match instance.
-                            if (match.Success)
-                            {
-                                string Name = match.Value.Substring(0, match.Value.Length - 1);
-                                string Line = Regex.Match(line, @"([A-Z][a-zA-Z_]+|[a-z][0-9]+)+\(.*\);").Value;
-                                string About = string.Join("\r\n", about.ToArray());
-                                int LineNumber = counter;
-                                if (sourceIndex == 0)
-                                {
-                                    FunctionsList_kotor.Add(new FunctionsListItem(Functtype, Name, Line, About, args, LineNumber));
-                                }
-                                else
-                                {
-                                    FunctionsList_tsl.Add(new FunctionsListItem(Functtype, Name, Line, About, args, LineNumber));
-                                }
-                            }
-                        }
-                        counter++;
-                    }
-
-
-                    //GET CONSTANTS
-                    reader.BaseStream.Position = 0;
-                    reader.DiscardBufferedData();
-                    int lineNum = 0;
-                    int maxLine = 1662;
-                    if (sourceIndex == 1)
-                    {
-                        maxLine = 2041;
-                    }
-
-
-                    while (((line = reader.ReadLine()) != null) && lineNum <= maxLine)
-                    {
-                        string conts_pattern = "(int|float)\\s*\\b([A-Z0-9_d]+)";
-                        if (Regex.IsMatch(line, conts_pattern))
-                        {
-                            Match match = Regex.Match(line, "(int|float)\\s*\\b([A-Z0-9_d]+)");
-                            Match constant = Regex.Match(match.ToString(), "\\b([A-Z0-9_d]+)\\b");
-
-                            if (sourceIndex == 0)
-                            {
-                                kotor_CONSTANTS.Add(constant.ToString());
-                            }
-                            else
-                            {
-                                tsl_CONSTANTS.Add(constant.ToString());
-                            }
-                        }
-
-                        lineNum++;
-                    }
-                }
-
-                sourceIndex++;
-            }
-            kotor_CONSTANTS.Sort();
-            tsl_CONSTANTS.Sort();
         }
 
         private void updateGameInfo()
         {
-            listBox1.Items.Clear();
-            if (currentGame == 1)
+            FunctionsList = GameManager.GetCurrentGame().NWScript.Functions;
+            ConstantsList = GameManager.GetCurrentGame().NWScript.Constants;
+            switch (GameManager.CurrentGame)
             {
-                FunctionsList = FunctionsList_kotor;
-                CONSTANTS_LIST = kotor_CONSTANTS;
-            }
-            else
-            {
-                FunctionsList = FunctionsList_tsl;
-                CONSTANTS_LIST = tsl_CONSTANTS;
+                case 0:
+                    kOTORIToolStripMenuItem2.CheckState = CheckState.Checked;
+                    kOTORIIToolStripMenuItem2.CheckState = CheckState.Unchecked;
+                    break;
+                case 1:
+                    kOTORIToolStripMenuItem2.CheckState = CheckState.Unchecked;
+                    kOTORIIToolStripMenuItem2.CheckState = CheckState.Checked;
+                    break;
             }
 
+            //Sort the FunctionsList
             FunctionsList = FunctionsList.OrderBy(c => c.Name).ToList();
 
+            //Clear the FunctionsList listBox control
+            listBox1.Items.Clear();
             foreach (FunctionsListItem item in FunctionsList)
             {
                 listBox1.Items.Add(item.Name);
             }
 
+            //Sort the FunctionsList
+            ConstantsList = ConstantsList.OrderBy(c => c.Name).ToList();
+
+            //Clear the ConstantsList listBox control
+            listBox2.Items.Clear();
+            foreach (ConstantListItem item in ConstantsList)
+            {
+                listBox2.Items.Add(item.Name);
+            }
+
             UpdateFormInfo();
-
         }
-
-        static class StringHelper
-        {
-            /// <summary>
-            /// Receives string and returns the string with its letters reversed.
-            /// </summary>
-            public static string ReverseString(string s)
-            {
-                char[] arr = s.ToCharArray();
-                Array.Reverse(arr);
-                return new string(arr);
-            }
-        }
-
-
-
-
-
-
-        private int LastFindIndex = 0;
-        private string openedFile = null;
-        private bool allowAutoComplete = true;
-
-        //1 = Kotor I //DEFAULT
-        //2 = Kotor 2
-        public static int currentGame = 1;
-
-        private List<FunctionsListItem> FunctionsList = new List<FunctionsListItem>();
-
-        private List<FunctionsListItem> FunctionsList_kotor = new List<FunctionsListItem>();
-        private List<FunctionsListItem> FunctionsList_tsl = new List<FunctionsListItem>();
-
-        private class FunctionsListItem
-        {
-            public string Type = null;
-            public string Name = null;
-            public string Code = null;
-            public string About = null;
-            public int LineNumber;
-            List<string> Args = new List<string>();
-
-
-            public FunctionsListItem(string type, string name, string code, string about, List<string> args, int lineNumber)
-            {
-                Type = type;
-                Name = name;
-                Code = code;
-                About = about;
-                Args = args;
-                LineNumber = lineNumber;
-            }
-            
-        }
-
-        public static List<string> CONSTANTS_LIST = new List<string>(); //Holds the CONSTANTS for the current game
-        public static List<string> kotor_CONSTANTS = new List<string>(); //Holds all the CONSTANTS for KotOR I
-        public static List<string> tsl_CONSTANTS = new List<string>(); //Holds all the CONSTANTS for KotOR II
 
         public ScriptEditorWindow()
         {
             InitializeComponent();
-
             functionInfoView = new ScintillaNET.Scintilla();
         }
 
+        private void InitializeGames()
+        {
+            GameManager.Games.Clear();
 
+            Game gKotOR = new Game(
+                "KotOR I",
+                String.IsNullOrEmpty(Properties.Settings.Default.KotORI_Directory) ? Properties.Settings.Default.KotORI_Directory : null,
+                "k1"
+            );
+            gKotOR.SetMenuIconResource(Properties.Resources.k1);
+            //Parse the KotOR's nwscript.nss file and store all the info for functions and constants
+            gKotOR.ParseNWScript();
+            GameManager.Games.Add(gKotOR);
+
+            Game gTSL = new Game(
+                "KotOR II",
+                String.IsNullOrEmpty(Properties.Settings.Default.KotORII_Directory) ? Properties.Settings.Default.KotORII_Directory : null,
+                "k2"
+            );
+            gTSL.SetMenuIconResource(Properties.Resources.k2);
+            //Parse the TSL's nwscript.nss file and store all the info for functions and constants
+            gTSL.ParseNWScript();
+            GameManager.Games.Add(gTSL);
+
+            updateGameInfo();
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Parse the games NSS files and store all functions and cosntants info
-            ParseNSS();
+            AutoSaveTimer.Interval = 5000;
+            AutoSaveTimer.Tick += new EventHandler(AutoSaveOpenFileStates);
+            InitializeGames();
+            UpdateFormTheme();
 
-            updateGameInfo();
+            FileHistoryManager.Initialize();
+            if(FileHistoryManager.OpenFiles.Count > 0)
+            {
+                OpenFiles(FileHistoryManager.OpenFiles.ToArray());
+                scriptTabs.SelectedIndex = Properties.Settings.Default.SelectedTabIndex;
+            }
 
             //Open any files that started the application
             string[] args = Environment.GetCommandLineArgs();
@@ -478,14 +219,20 @@ namespace NWN_Script
 
             if (args.Length >= 1)
             {
-                OpenFiles(args);
+                OpenFiles(args, true);
             }
-            else
+            else if(FileHistoryManager.OpenFiles.Count == 0)
             {
-                createNewPage();
+                CreateNewEditorTab(FileSettings.NewPageFile());
             }
 
-            updateFormTitle();
+            FileHistoryManager.OnRecentFilesChanged(() =>
+            {
+                UpdateRecentFilesMenu();
+            });
+
+            UpdateRecentFilesMenu();
+
             this.BringToFront();
             this.Focus();
             this.BringToFront();
@@ -493,37 +240,92 @@ namespace NWN_Script
             this.WindowState = FormWindowState.Normal;
 
             UpdateTabSpacing();
+
+            scriptTabs.SelectedIndexChanged += (sender2, e2) =>
+            {
+                Properties.Settings.Default.SelectedTabIndex = scriptTabs.SelectedIndex;
+                Properties.Settings.Default.Save();
+            };
+
+            //I moved functionInfoView here because it breaks the Form Designer otherwise
             // 
             // functionInfo
             // 
             functionInfoView.Anchor = ((((AnchorStyles.Top | AnchorStyles.Bottom)
                         | AnchorStyles.Left)
                         | AnchorStyles.Right));
-            functionInfoView.ConfigurationManager.CustomLocation = "ScintillaNET.xml";
-            functionInfoView.ConfigurationManager.Language = "cpp";
+            ThemeManager.ConfigureScintillaControlTheme(functionInfoView);
             functionInfoView.IsReadOnly = true;
-            functionInfoView.Location = new Point(0, 0);
+            functionInfoView.Location = new Point(7, 23);
             functionInfoView.Name = "functionInfo Window";
-            functionInfoView.Size = new Size(517, 96);
+            functionInfoView.Size = new Size(1323, 276);
             functionInfoView.Styles.BraceBad.Size = 6F;
             functionInfoView.Styles.BraceLight.Size = 6F;
             functionInfoView.Styles.ControlChar.Size = 6F;
-            functionInfoView.Styles.Default.BackColor = SystemColors.Window;
             functionInfoView.Styles.Default.Size = 6F;
             functionInfoView.Styles.IndentGuide.Size = 6F;
             functionInfoView.Styles.LastPredefined.Size = 6F;
             functionInfoView.Styles.LineNumber.Size = 6F;
+            //functionInfoView.Dock = DockStyle.Fill;
             functionInfoView.Styles.Max.Size = 6F;
             functionInfoView.TabIndex = 11;
+            functionInfoView.Margins.Margin0.Width = 25;
+            functionInfoView.Margins.Margin2.Width = 20;
             splitContainer1.Panel2.Controls.Add(functionInfoView);
             splitContainer1.Panel2.Controls.SetChildIndex(functionInfoView, 0);
 
+            SplashScreen();
             //FileAssociation.Associate(".nss", "nss.nwscript", "SWKotOR Script Source", "\\Resources\\icon.ico", "Kotor Scripting Tool.exe");
             //FileAssociation.Associate(".ncs", "ncs.nwscript", "SWKotOR Script Compiled", "\\Resources\\icon.ico", "Kotor Scripting Tool.exe");
+            AutoSaveTimer.Enabled = true;
         }
 
+        private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+            FileHistoryManager.Save();
+            AutoSaveOpenFileStates(null, null);
+        }
 
-        private void changeFunctionInfo(string Name)
+        private void AutoSaveOpenFileStates(object Sender, EventArgs e)
+        {
+            foreach (EditorTabPage tab in scriptTabs.TabPages)
+            {
+                tab.SaveState();
+            }
+        }
+
+        private void UpdateRecentFilesMenu()
+        {
+            Debug.WriteLine("UpdateRecentFilesMenu: "+ FileHistoryManager.RecentFiles.Count);
+            int count = 0;
+            foreach(ToolStripMenuItem recentControl in recentToolStripMenuItem.DropDownItems)
+            {
+                recentControl.Visible = false;
+                if (count < FileHistoryManager.RecentFiles.Count)
+                {
+                    string file = FileHistoryManager.RecentFiles[count];
+                    if (!String.IsNullOrEmpty(file))
+                    {
+                        recentControl.Text = file;
+                        recentControl.Enabled = true;
+                        recentControl.Visible = true;
+                        recentControl.Tag = file;
+                    }
+                }
+
+                count++;
+            }
+
+            recentToolStripMenuItem.Invalidate();
+        }
+
+        private void recentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem recentControl = (ToolStripMenuItem)sender;
+            OpenFile((string)recentControl.Tag, true);
+        }
+
+        private bool changeFunctionInfo(string Name)
         {
             functionInfoView.IsReadOnly = false;
             FunctionsListItem item = FunctionsList.Find(delegate(FunctionsListItem f) { return f.Name == Name; });
@@ -535,50 +337,7 @@ namespace NWN_Script
 
             //Scroll to the bottom
             functionInfoView.Scrolling.ScrollBy(0, functionInfoView.Lines.Count);
-        }
-
-        /*
-         * Script Editor OnScroll Event
-         */
-
-        private void scriptEditor_Scroll(object sender, ScrollEventArgs e)
-        {
-            //MessageBox.Show(e.NewValue.ToString());
-
-            int LinesHeight = (GetSelectedEditor().Size.Height / GetSelectedEditor().Lines.Current.Height);
-            int CurrentValue = (LinesHeight + (e.NewValue-1));
-
-            if (CurrentValue >= 1000)
-            {
-                int Margin = 1;
-                GetSelectedEditor().Margins[0].Width = 25 + (5*Margin);
-            }
-            else
-            {
-                GetSelectedEditor().Margins[0].Width = 25;
-            }
-        }
-
-        /*
-         * Auto Complete Accepted Event
-         */
-
-        private void scriptEditor_AutoCompleteAccepted(object sender, ScintillaNET.AutoCompleteAcceptedEventArgs e)
-        {
-
-            changeFunctionInfo(e.Text);
-            GetSelectedEditor().SelectionChanged += new EventHandler(finishComplete);
-        }
-
-        /*
-         * Auto Complete finished event
-         */
-        private void finishComplete(object sender, EventArgs e)
-        {
-            GetSelectedEditor().Selection.Text = "();";
-            GetSelectedEditor().Selection.Start = (GetSelectedEditor().Selection.Start - 2);
-            GetSelectedEditor().Selection.End = GetSelectedEditor().Selection.Start;
-            GetSelectedEditor().SelectionChanged -= finishComplete;
+            return (item != null);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -628,13 +387,9 @@ namespace NWN_Script
                 spacingToolStripMenuItem2.Checked = true;
             }
 
-            foreach (Control control in scriptTabs.SelectedTab.Controls)
+            foreach (EditorTabPage tab in scriptTabs.TabPages)
             {
-                if (control.GetType() == typeof(ScintillaNET.Scintilla))
-                {
-                    ScintillaNET.Scintilla tabEditor = (ScintillaNET.Scintilla)control;
-                    tabEditor.Indentation.TabWidth = Properties.Settings.Default.TabWidth;
-                }
+                tab.editor.Indentation.TabWidth = Properties.Settings.Default.TabWidth;
             }
         }
 
@@ -664,94 +419,99 @@ namespace NWN_Script
         }
 
         /*
+         * OnDoubleClick Event for the ListBox
+         */
+
+        private void listBox2_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            string selected = listBox2.SelectedItem.ToString();
+
+            ConstantListItem item = ConstantsList.Find(delegate (ConstantListItem f) { return f.Name == selected; });
+            if (item != null)
+            {
+                ScintillaNET.Scintilla tabEditor = null;
+                foreach (Control control in scriptTabs.SelectedTab.Controls)
+                {
+                    if (control.GetType() == typeof(ScintillaNET.Scintilla))
+                    {
+                        tabEditor = (ScintillaNET.Scintilla)control;
+                    }
+                }
+
+                tabEditor.InsertText(tabEditor.Caret.Anchor, item.Name + "\n");
+                tabEditor.Selection.Start = (tabEditor.Selection.Start + (item.Name.Length + 1));
+            }
+        }
+
+        /*
          * OnKeyUp Event for the FucntionsList Search TextBox
          */
 
         private void functionSearch_KeyUp(object sender, KeyEventArgs e)
         {
             listBox1.Items.Clear();
-            FunctionsList.ForEach(delegate(FunctionsListItem f) {
+            bool textDifference = !functionSearch.Text.Equals(constantsSearch.Text);
+            constantsSearch.Text = functionSearch.Text;
+            if (textDifference)
+            {
+                constantsSearch_KeyUp(sender, e);
+            }
 
-                if (f.Name.ToLower().Contains(functionSearch.Text.ToLower()))
-                {
-                    listBox1.Items.Add(f.Name);
+            //Filter Functions
+            try
+            {
+                FunctionsList.ForEach(delegate (FunctionsListItem f) {
+
+                    if (f.Name.ToLower().Contains(functionSearch.Text.ToLower()))
+                    {
+                        listBox1.Items.Add(f.Name);
+                    }
+
+                });
+
+                if (listBox1.Items.Count == 0) {
+                    listBox1.Items.Add("No functions found");
                 }
-
-            });
-
-            if(listBox1.Items.Count == 0){
+            }catch(Exception exception)
+            {
                 listBox1.Items.Add("No functions found");
             }
         }
 
         /*
-         * OnClick Event for the Quick Compile Button
+         * OnKeyUp Event for the FucntionsList Search TextBox
          */
 
-        private void btn_QuickCompile_Click(object sender, EventArgs e)
+        private void constantsSearch_KeyUp(object sender, KeyEventArgs e)
         {
-            CompileScript();
-        }
-
-        /*
-         * Auto Complete Event Handler
-         */
-
-        private void scriptEditor_KeyUp(object sender, KeyEventArgs e)
-        {
-            try {
-                ScintillaNET.Scintilla CurrentEditor = GetSelectedEditor();
-
-                if ((e.KeyCode != Keys.Up) && (e.KeyCode != Keys.Down) && (e.KeyCode != Keys.Back) && allowAutoComplete)
-                {
-                    CurrentEditor.AutoComplete.List.Clear();
-                    CurrentEditor.AutoComplete.Dispose();
-
-                    if (e.KeyCode != Keys.Enter)
-                    {
-                        string line = CurrentEditor.Lines.Current.Text;
-
-                        int caret = (CurrentEditor.Lines.Current.SelectionStartPosition - CurrentEditor.Lines.Current.StartPosition);
-                        string lineReversed;
-                        if (line.Length > 1)
-                        {
-                            lineReversed = StringHelper.ReverseString(line.Substring(0, caret));
-                        }
-                        else
-                        {
-                            lineReversed = line;
-                        }
-
-                        Match functionMatch = Regex.Match(lineReversed, "(^[\\S][a-z0-9A-Z]+)\\b");
-
-                        foreach (FunctionsListItem item in FunctionsList)
-                        {
-
-
-                            if (item.Name.Contains(StringHelper.ReverseString(functionMatch.Value)) && functionMatch.Value != "")
-                            {
-                                CurrentEditor.AutoComplete.List.Add(item.Name);
-                            }
-
-                        }
-
-                        if (CurrentEditor.AutoComplete.List.Count > 0)
-                        {
-                            CurrentEditor.AutoComplete.Show();
-                            changeFunctionInfo(CurrentEditor.AutoComplete.SelectedText);
-                        }
-                    }
-                }
-                else
-                {
-                    if (CurrentEditor.AutoComplete.IsActive)
-                    {
-                        changeFunctionInfo(CurrentEditor.AutoComplete.SelectedText);
-                    }
-                }
-            }catch(Exception exception)
+            listBox2.Items.Clear();
+            bool textDifference = !functionSearch.Text.Equals(constantsSearch.Text);
+            functionSearch.Text = constantsSearch.Text;
+            if (textDifference)
             {
+                constantsSearch_KeyUp(sender, e);
+            }
 
+            //Filter Constants
+            try
+            {
+                ConstantsList.ForEach(delegate (ConstantListItem f) {
+
+                    if (f.Name.ToLower().Contains(functionSearch.Text.ToLower()))
+                    {
+                        listBox2.Items.Add(f.Name);
+                    }
+
+                });
+
+                if (listBox2.Items.Count == 0)
+                {
+                    listBox2.Items.Add("No constants found");
+                }
+            }
+            catch (Exception exception)
+            {
+                listBox2.Items.Add("No constants found");
             }
         }
 
@@ -779,22 +539,106 @@ namespace NWN_Script
         {
             e.DrawBackground();
             Graphics g = e.Graphics;
-
-            FunctionsListItem item = FunctionsList.Find(delegate(FunctionsListItem f) { return f.Name == ((ListBox)sender).Items[e.Index].ToString(); });
-
-            if (item.Type == "int")
+            Font textFont = new Font(listBox1.Font.FontFamily, 12.0f, FontStyle.Regular, GraphicsUnit.Point);
+            try
             {
-                g.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(Color.Blue), new PointF(e.Bounds.X, e.Bounds.Y));
-            }
-            else if (item.Type == "object")
-            {
-                g.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(Color.Purple), new PointF(e.Bounds.X, e.Bounds.Y));
-            }
-            else if (item.Type == "void")
-            {
-                g.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(Color.Black), new PointF(e.Bounds.X, e.Bounds.Y));
-            }
+                FunctionsListItem item = FunctionsList.Find(delegate (FunctionsListItem f) { return f.Name == ((ListBox)sender).Items[e.Index].ToString(); });
+                SolidBrush typeColor = new SolidBrush(ThemeManager.GetListBoxForeColor());
+                if (item.Type == "int")
+                {
+                    typeColor = new SolidBrush(Color.Blue);
+                }
+                else if (item.Type == "float")
+                {
+                    typeColor = new SolidBrush(Color.Purple);
+                }
+                else if (item.Type == "void")
+                {
+                    typeColor = new SolidBrush(Color.Gray);
+                }
+                else if (item.Type == "object")
+                {
+                    typeColor = new SolidBrush(Color.SteelBlue);
+                }
+                else if (item.Type == "talent")
+                {
+                    typeColor = new SolidBrush(Color.Orange);
+                }
+                else if (item.Type == "effect")
+                {
+                    typeColor = new SolidBrush(Color.Red);
+                }
+                else if (item.Type == "location")
+                {
+                    typeColor = new SolidBrush(Color.YellowGreen);
+                }
+                else if (item.Type == "vector")
+                {
+                    typeColor = new SolidBrush(Color.Green);
+                }
 
+                string typeLabel = item.Type + " ";
+                g.DrawString(typeLabel, textFont, typeColor, new PointF(e.Bounds.X, e.Bounds.Y));
+                Size textSize = TextRenderer.MeasureText("location ", textFont);
+                g.DrawString(((ListBox)sender).Items[e.Index].ToString(), textFont, new SolidBrush(ThemeManager.GetListBoxForeColor()), new PointF(e.Bounds.X + textSize.Width, e.Bounds.Y));
+            }
+            catch (Exception exception)
+            {
+                g.DrawString("No functions found...", textFont, new SolidBrush(ThemeManager.GetListBoxForeColor()), new PointF(e.Bounds.X, e.Bounds.Y));
+            }
+        }
+
+        private void listBox2_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            Graphics g = e.Graphics;
+            Font textFont = new Font(listBox2.Font.FontFamily, 12.0f, FontStyle.Regular, GraphicsUnit.Point);
+            try
+            {
+                ConstantListItem item = ConstantsList.Find(delegate (ConstantListItem f) { return f.Name == ((ListBox)sender).Items[e.Index].ToString(); });
+                SolidBrush typeColor = new SolidBrush(ThemeManager.GetListBoxForeColor());
+                if (item.Type == "int")
+                {
+                    typeColor = new SolidBrush(Color.Blue);
+                }
+                else if (item.Type == "float")
+                {
+                    typeColor = new SolidBrush(Color.Purple);
+                }
+                else if (item.Type == "void")
+                {
+                    typeColor = new SolidBrush(Color.Gray);
+                }
+                else if (item.Type == "object")
+                {
+                    typeColor = new SolidBrush(Color.SteelBlue);
+                }
+                else if (item.Type == "talent")
+                {
+                    typeColor = new SolidBrush(Color.Orange);
+                }
+                else if (item.Type == "effect")
+                {
+                    typeColor = new SolidBrush(Color.Red);
+                }
+                else if (item.Type == "location")
+                {
+                    typeColor = new SolidBrush(Color.YellowGreen);
+                }
+                else if (item.Type == "vector")
+                {
+                    typeColor = new SolidBrush(Color.Green);
+                }
+
+                string typeLabel = item.Type + " ";
+                g.DrawString(typeLabel, textFont, typeColor, new PointF(e.Bounds.X, e.Bounds.Y));
+                Size textSize = TextRenderer.MeasureText("float ", textFont);
+                g.DrawString(((ListBox)sender).Items[e.Index].ToString(), textFont, new SolidBrush(ThemeManager.GetListBoxForeColor()), new PointF(e.Bounds.X + textSize.Width, e.Bounds.Y));
+            }
+            catch (Exception exception)
+            {
+                g.DrawString("No constants found...", textFont, new SolidBrush(ThemeManager.GetListBoxForeColor()), new PointF(e.Bounds.X, e.Bounds.Y));
+            }
         }
 
         private void kOTORIToolStripMenuItem_Click(object sender, EventArgs e)
@@ -820,19 +664,16 @@ namespace NWN_Script
 
         }
 
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            return;
+        }
+
         private void scriptEditor_Load(object sender, EventArgs e)
         {
             /*scriptEditor.Focus();
             scriptEditor.Selection.Start = 14;*/
         }
-
-        private void scriptEditor_TextChanged(object sender, EventArgs e)
-        {
-            ((FileSettings)scriptTabs.SelectedTab.Tag).UnsvedChanges = true;
-            updateFormTitle();
-        }
-
-
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -840,18 +681,6 @@ namespace NWN_Script
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            ConstantsForm constantsForm = new ConstantsForm();
-
-            if (constantsForm.ShowDialog() == DialogResult.OK) //popup form is loaded here and parent form will wait for dialogresult from popup window.
-            {
-                GetSelectedEditor().Selection.Text = constantsForm.SelectedConstant;
-            }
-
-
         }
 
         private void showFunctionListToolStripMenuItem_Click(object sender, EventArgs e)
@@ -868,9 +697,10 @@ namespace NWN_Script
         {
             if (scriptTabs.TabPages.Count == 0)
             {
-                createNewPage();
+                CreateNewEditorTab(FileSettings.NewPageFile());
             }
-            GetSelectedEditor().Focus();
+            EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+            tab.editor.Focus();
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -895,54 +725,33 @@ namespace NWN_Script
          * 
          */
 
-        //CHange game to Kotor I
+        //Change the target game to KotOR I
         private void kOTORIToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-
-            if (kOTORIToolStripMenuItem2.CheckState == CheckState.Unchecked)
-            {
-                kOTORIToolStripMenuItem2.CheckState = CheckState.Checked;
-                currentGame = 1;
-                kOTORIIToolStripMenuItem2.CheckState = CheckState.Unchecked;
-            }
-            else
-            {
-                kOTORIToolStripMenuItem2.CheckState = CheckState.Unchecked;
-                currentGame = 2;
-                kOTORIIToolStripMenuItem2.CheckState = CheckState.Checked;
-            }
-
+            GameManager.SetCurrentGameIndex(0);
+            kOTORIToolStripMenuItem2.CheckState = CheckState.Checked;
+            kOTORIIToolStripMenuItem2.CheckState = CheckState.Unchecked;
             updateGameInfo();
         }
 
-        //Change game to Kotor II
+        //Change the target game to KotOR II
         private void kOTORIIToolStripMenuItem2_Click(object sender, EventArgs e)
         {
 
-            if (kOTORIIToolStripMenuItem2.CheckState == CheckState.Unchecked)
-            {
-                kOTORIIToolStripMenuItem2.CheckState = CheckState.Checked;
-                currentGame = 2;
-                kOTORIToolStripMenuItem2.CheckState = CheckState.Unchecked;
-            }
-            else
-            {
-                kOTORIIToolStripMenuItem2.CheckState = CheckState.Unchecked;
-                currentGame = 1;
-                kOTORIToolStripMenuItem2.CheckState = CheckState.Checked;
-            }
-
+            GameManager.SetCurrentGameIndex(1);
+            kOTORIIToolStripMenuItem2.CheckState = CheckState.Checked;
+            kOTORIToolStripMenuItem2.CheckState = CheckState.Unchecked;
             updateGameInfo();
         }
 
-        //Show/Hide Functions List
+        //Show/Hide Functions/Constants List Pane
         private void showFunctionListToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             showFunctionListToolStripMenuItem1.Checked = !showFunctionListToolStripMenuItem1.Checked;
             splitContainer2.Panel2Collapsed = !splitContainer2.Panel2Collapsed;
         }
 
-        //Show/Hide Function Info
+        //Show/Hide Function Info Pane
         private void showFunctionInfoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             showFunctionInfoToolStripMenuItem1.Checked = !showFunctionInfoToolStripMenuItem1.Checked;
@@ -965,98 +774,82 @@ namespace NWN_Script
         //Create a new tab
         private void newToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            createNewPage();
-            ScintillaNET.Scintilla tabEditor = GetSelectedEditor();
+            CreateNewEditorTab(FileSettings.NewPageFile());
+        }
 
-            tabEditor.Text = "void main(){\n\n\n\n}";
-            tabEditor.Focus();
-            tabEditor.Selection.Start = 14;
+        public void OpenFile(string openFileName, bool record = false)
+        {
+            if (!String.IsNullOrEmpty(openFileName))
+            {
+                try
+                {
+                    string myPath = openFileName;
+                    string extension = Path.GetExtension(myPath);
+                    string fileName = Path.GetFileName(myPath);
+                    string filePath = Path.GetFullPath(myPath);
+
+                    if (extension == ".ncs")
+                    {
+                        if (GameManager.GetCurrentGame() != null)
+                        {
+                            GameManager.GetCurrentGame().DecompileScript(openFileName);
+                            string appPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                            using (StreamReader reader = new StreamReader(Path.GetDirectoryName(appPath) + "\\tmp_decompiled.nss"))
+                            {
+                                FileSettings fileSettings = FileSettings.NewPageFile();
+                                string str = reader.ReadToEnd();
+                                Encoding ascii = Encoding.ASCII;
+                                Byte[] encodedBytes = ascii.GetBytes(str);
+                                string text = ascii.GetString(encodedBytes);
+                                fileSettings.SavedContent = text;
+                                fileSettings.Content = text;
+
+                                EditorTabPage tabPage = CreateNewEditorTab(fileSettings);
+
+                                fileSettings.FileName = fileName;
+                                fileSettings.CompleteFileName = openFileName;
+                                fileSettings.FilePath = filePath;
+                                fileSettings.FileDataType = FileDataType.COMPILED;
+                                
+                                if (record)
+                                {
+                                    FileHistoryManager.OpenFile(openFileName);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        FileSettings fileSettings = FileSettings.LoadState(openFileName);
+                        if(fileSettings != null)
+                        {
+                            CreateNewEditorTab(fileSettings);
+                            if (record)
+                            {
+                                FileHistoryManager.OpenFile(openFileName);
+                            }
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                }
+            }
         }
 
         //Open Files
-        public void OpenFiles(string[] filesToOpen)
+        public void OpenFiles(string[] filesToOpen, bool record = false)
         {
             foreach (string openFileName in filesToOpen)
             {
-                if (!String.IsNullOrEmpty(openFileName))
-                {
-                    //Stream myStream = null;
-                    try
-                    {
-                        //if ((myStream == File.OpenRead(openFileName)) != null)
-                        //{
-
-                        string myPath = openFileName;
-                        string extension = Path.GetExtension(myPath);
-                        string fileName = Path.GetFileName(myPath);
-                        string filePath = Path.GetFullPath(myPath);
-
-                        if (extension == ".ncs")
-                        {
-
-                            string appPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-
-                            Process nwnnsscomp = new Process();
-                            nwnnsscomp.StartInfo.FileName = @"nwnnsscomp.exe";
-                            nwnnsscomp.StartInfo.Arguments = "-d \"" + openFileName + "\" --outputdir \"" + Path.GetDirectoryName(appPath) + "\" -o \"tmp_decompiled.nss\"";
-                            nwnnsscomp.StartInfo.RedirectStandardOutput = true;
-                            nwnnsscomp.StartInfo.UseShellExecute = false;
-                            nwnnsscomp.StartInfo.WorkingDirectory = Path.GetDirectoryName(appPath);
-
-                            nwnnsscomp.Start();
-
-                            MessageBox.Show(nwnnsscomp.StandardOutput.ReadToEnd());
-
-                            using (StreamReader reader = new StreamReader(Path.GetDirectoryName(appPath) + "\\tmp_decompiled.nss"))
-                            {
-                                createNewPage();
-                                ScintillaNET.Scintilla tabEditor = GetSelectedEditor();
-
-                                ((FileSettings)scriptTabs.SelectedTab.Tag).FileName = fileName;
-                                ((FileSettings)scriptTabs.SelectedTab.Tag).CompleteFileName = openFileName;
-                                ((FileSettings)scriptTabs.SelectedTab.Tag).FilePath = filePath;
-
-                                string str = reader.ReadToEnd();
-                                System.Text.Encoding ascii = System.Text.Encoding.ASCII;
-                                Byte[] encodedBytes = ascii.GetBytes(str);
-
-                                tabEditor.Text = ascii.GetString(encodedBytes);
-
-                                openedFile = openFileName;
-                                UpdateFileInfo();
-                            }
-                        }
-                        else
-                        {
-
-                            using (StreamReader reader = new StreamReader(openFileName))
-                            {
-                                createNewPage();
-                                ScintillaNET.Scintilla tabEditor = GetSelectedEditor();
-
-                                ((FileSettings)scriptTabs.SelectedTab.Tag).FileName = fileName;
-                                ((FileSettings)scriptTabs.SelectedTab.Tag).CompleteFileName = openFileName;
-                                ((FileSettings)scriptTabs.SelectedTab.Tag).FilePath = filePath;
-
-                                string contents = reader.ReadToEnd();
-                                tabEditor.Text = contents;
-                                openedFile = openFileName;
-                                UpdateFileInfo();
-                            }
-
-                        }
-                        //}
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
-                    }
-                }
+                OpenFile(openFileName, record);
             }
             this.Focus();
         }
 
-        //Open file in new tab
+        //Open a file in new tab
         private void openToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             //Stream myStream = null;
@@ -1066,95 +859,48 @@ namespace NWN_Script
             OpenFile.Multiselect = true;
             if (OpenFile.ShowDialog() == DialogResult.OK)
             {
-                OpenFiles(OpenFile.FileNames);
+                OpenFiles(OpenFile.FileNames, true);
             }
         }
 
         //Save current tab
         private void saveToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            if (((FileSettings)scriptTabs.SelectedTab.Tag).CompleteFileName != null)
-            {
-                string fileToSave = ((FileSettings)scriptTabs.SelectedTab.Tag).CompleteFileName;
-                using (StreamWriter outfile = new StreamWriter(fileToSave))
-                {
-                    ScintillaNET.Scintilla tabEditor = GetSelectedEditor();
-
-                    outfile.Write(tabEditor.Text.ToString());
-                    ((FileSettings)scriptTabs.SelectedTab.Tag).UnsvedChanges = false;
-                    updateFormTitle();
-                }
-
-            }
-            else
-            {
-                SaveFileDialog saveFile = new SaveFileDialog();
-
-                saveFile.Filter = "SWKotOR Script Files (*.nss*)|*.nss|txt files (*.txt)|*.txt";
-                if (saveFile.ShowDialog() == DialogResult.OK)
-                {
-
-                    string myPath = saveFile.FileName;
-                    string extension = Path.GetExtension(myPath);
-                    string fileName = Path.GetFileName(myPath);
-                    string filePath = Path.GetFullPath(myPath);
-
-                    using (StreamWriter outfile = new StreamWriter(saveFile.FileName.ToString()))
-                    {
-                        ((FileSettings)scriptTabs.SelectedTab.Tag).FileName = fileName;
-                        ((FileSettings)scriptTabs.SelectedTab.Tag).CompleteFileName = saveFile.FileName.ToString();
-                        ((FileSettings)scriptTabs.SelectedTab.Tag).FilePath = filePath;
-                        ((FileSettings)scriptTabs.SelectedTab.Tag).UnsvedChanges = false;
-
-                        ScintillaNET.Scintilla tabEditor = GetSelectedEditor();
-                        outfile.Write(tabEditor.Text.ToString());
-
-                        UpdateFileInfo();
-                    }
-
-                }
-            }
+            saveCurrentFile();
         }
 
         private void saveCurrentFile()
         {
-            SaveFileDialog saveFile = new SaveFileDialog();
-
-            saveFile.Filter = "SWKotOR Script Files (*.nss*)|*.nss|txt files (*.txt)|*.txt";
-            if (saveFile.ShowDialog() == DialogResult.OK)
+            if (scriptTabs.SelectedTab != null)
             {
-                string myPath = saveFile.FileName;
-                string extension = Path.GetExtension(myPath);
-                string fileName = Path.GetFileName(myPath);
-                string filePath = Path.GetFullPath(myPath);
+                EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+                tab.SaveFile();
+            }
+        }
 
-                using (StreamWriter outfile = new StreamWriter(saveFile.FileName.ToString()))
-                {
-                    ((FileSettings)scriptTabs.SelectedTab.Tag).FileName = fileName;
-                    ((FileSettings)scriptTabs.SelectedTab.Tag).CompleteFileName = saveFile.FileName.ToString();
-                    ((FileSettings)scriptTabs.SelectedTab.Tag).FilePath = filePath;
-                    ((FileSettings)scriptTabs.SelectedTab.Tag).UnsvedChanges = false;
-
-                    ScintillaNET.Scintilla tabEditor = GetSelectedEditor();
-                    outfile.Write(tabEditor.Text.ToString());
-
-                    UpdateFileInfo();
-                }
+        private void saveCurrentFileAs()
+        {
+            if(scriptTabs.SelectedTab != null)
+            {
+                EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+                tab.SaveFileAs();
             }
         }
 
         private void saveAsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            saveCurrentFile();
+            saveCurrentFileAs();
         }
 
         private void saveAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (TabPage page in scriptTabs.TabPages)
+            int oldIndex = scriptTabs.SelectedIndex;
+            foreach (EditorTabPage page in scriptTabs.TabPages)
             {
                 scriptTabs.SelectedTab = page;
                 saveCurrentFile();
             }
+            scriptTabs.SelectedIndex = oldIndex;
         }
 
         //Compile script in current tab
@@ -1168,18 +914,8 @@ namespace NWN_Script
         {
             if (scriptTabs.SelectedTab != null)
             {
-                if (((FileSettings)scriptTabs.SelectedTab.Tag).UnsvedChanges)
-                {
-                    if (MessageBox.Show("You have unsaved changes.\nAre you sure you want to close?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        scriptTabs.SelectedTab.Dispose();
-                    }
-
-                }
-                else
-                {
-                    scriptTabs.SelectedTab.Dispose();
-                }
+                EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+                tab.CloseFile();
             }
         }
 
@@ -1203,154 +939,167 @@ namespace NWN_Script
 
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FindWindow findWindow = new FindWindow();
-            findWindow.FindEvent += new EventHandler(childWindow_FindTextEvent);
-            findWindow.toFind = GetSelectedEditor().Selection.Text;
-            findWindow.Show();
+            if (scriptTabs.SelectedTab != null)
+            {
+                EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+                FindWindow findWindow = new FindWindow();
+                findWindow.FindEvent += new EventHandler(childWindow_FindTextEvent);
+                findWindow.toFind = tab.editor.Selection.Text;
+                findWindow.Show();
 
-            LastFindIndex = 0;
+                LastFindIndex = 0;
+            }
         }
 
         void childWindow_FindTextEvent(object sender, EventArgs e)
         {
-            string toFind = ((FindWindow.FindArgs)e).Message;
-            bool matchCase = ((FindWindow.FindArgs)e).MatchCase;
-
-            CompareInfo Compare = CultureInfo.InvariantCulture.CompareInfo;
-
-            StringComparison stringCompare = StringComparison.CurrentCultureIgnoreCase;
-
-            if(matchCase){
-                stringCompare = StringComparison.CurrentCulture;
-            }
-
-
-            if (GetSelectedEditor().Text.IndexOf(toFind, stringCompare) == 0)
+            if (scriptTabs.SelectedTab != null)
             {
-                int startIndex = GetSelectedEditor().Text.IndexOf(toFind, LastFindIndex, stringCompare);
-                int endIndex = toFind.Length;
+                EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+                string toFind = ((FindWindow.FindArgs)e).Message;
+                bool matchCase = ((FindWindow.FindArgs)e).MatchCase;
 
-                GetSelectedEditor().Selection.Start = startIndex;
-                GetSelectedEditor().Selection.End = (startIndex + endIndex);
+                CompareInfo Compare = CultureInfo.InvariantCulture.CompareInfo;
+                StringComparison stringCompare = StringComparison.CurrentCultureIgnoreCase;
 
-                LastFindIndex = GetSelectedEditor().Selection.End;
-                if (GetSelectedEditor().Text.IndexOf(toFind, LastFindIndex, stringCompare) == -1)
+                if (matchCase)
                 {
-                    LastFindIndex = 0;
-                    MessageBox.Show("No more references found");
+                    stringCompare = StringComparison.CurrentCulture;
                 }
 
-            }
-            else
-            {
-                MessageBox.Show("Query not found.");
+
+                if (tab.editor.Text.IndexOf(toFind, stringCompare) == 0)
+                {
+                    int startIndex = tab.editor.Text.IndexOf(toFind, LastFindIndex, stringCompare);
+                    int endIndex = toFind.Length;
+
+                    tab.editor.Selection.Start = startIndex;
+                    tab.editor.Selection.End = (startIndex + endIndex);
+
+                    LastFindIndex = tab.editor.Selection.End;
+                    if (tab.editor.Text.IndexOf(toFind, LastFindIndex, stringCompare) == -1)
+                    {
+                        LastFindIndex = 0;
+                        MessageBox.Show("No more references found");
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Query not found.");
+                }
             }
         }
 
         private void findAndReplaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (scriptTabs.SelectedTab != null)
+            {
+                EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+                FindAndReplace replaceWindow = new FindAndReplace();
+                replaceWindow.ReplaceEvent += new EventHandler(childWindow_replaceOnceEvent);
+                replaceWindow.ReplaceAllEvent += new EventHandler(childWindow_replaceAllEvent);
+                replaceWindow.toFind = tab.editor.Selection.Text;
+                replaceWindow.Show();
 
-            FindAndReplace replaceWindow = new FindAndReplace();
-            replaceWindow.ReplaceEvent += new EventHandler(childWindow_replaceOnceEvent);
-            replaceWindow.ReplaceAllEvent += new EventHandler(childWindow_replaceAllEvent);
-            replaceWindow.toFind = GetSelectedEditor().Selection.Text;
-            replaceWindow.Show();
-
-            LastFindIndex = 0;
+                LastFindIndex = 0;
+            }
         }
 
         private void childWindow_replaceOnceEvent(object sender, EventArgs e)
         {
-
-            string toFind = ((FindAndReplace.ReplaceArgs)e).ToFind;
-            string toRepalce = ((FindAndReplace.ReplaceArgs)e).ToReplace;
-            bool matchCase = ((FindAndReplace.ReplaceArgs)e).MatchCase;
-
-            if (GetSelectedEditor().Text.IndexOf(toFind) != -1)
+            if (scriptTabs.SelectedTab != null)
             {
-                if (GetSelectedEditor().Text.IndexOf(toFind, LastFindIndex) == -1)
-                {
-                    LastFindIndex = 0;
-                }
+                EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+                string toFind = ((FindAndReplace.ReplaceArgs)e).ToFind;
+                string toRepalce = ((FindAndReplace.ReplaceArgs)e).ToReplace;
+                bool matchCase = ((FindAndReplace.ReplaceArgs)e).MatchCase;
 
-                int startIndex = GetSelectedEditor().Text.IndexOf(toFind, LastFindIndex);
-                int endIndex = toFind.Length;
-
-                GetSelectedEditor().Selection.Start = startIndex;
-                GetSelectedEditor().Selection.End = (startIndex + endIndex);
-                LastFindIndex = GetSelectedEditor().Selection.End;
-                if (String.Compare(GetSelectedEditor().Selection.Text, toFind, matchCase) == 0)
+                if (tab.editor.Text.IndexOf(toFind) != -1)
                 {
-                    GetSelectedEditor().Selection.Text = toRepalce;
+                    if (tab.editor.Text.IndexOf(toFind, LastFindIndex) == -1)
+                    {
+                        LastFindIndex = 0;
+                    }
+
+                    int startIndex = tab.editor.Text.IndexOf(toFind, LastFindIndex);
+                    int endIndex = toFind.Length;
+
+                    tab.editor.Selection.Start = startIndex;
+                    tab.editor.Selection.End = (startIndex + endIndex);
+                    LastFindIndex = tab.editor.Selection.End;
+                    if (String.Compare(tab.editor.Selection.Text, toFind, matchCase) == 0)
+                    {
+                        tab.editor.Selection.Text = toRepalce;
+                    }
+                    else
+                    {
+                        tab.editor.Selection.Dispose();
+                    }
                 }
                 else
                 {
-                    GetSelectedEditor().Selection.Dispose();
+                    MessageBox.Show("Query not found.");
                 }
-
-
-
             }
-            else
-            {
-                MessageBox.Show("Query not found.");
-            }
-
         }
 
         private void childWindow_replaceAllEvent(object sender, EventArgs e)
         {
-
-            string toFind = ((FindAndReplace.ReplaceArgs)e).ToFind;
-            string toRepalce = ((FindAndReplace.ReplaceArgs)e).ToReplace;
-            bool matchCase = ((FindAndReplace.ReplaceArgs)e).MatchCase;
-            bool inSelection = ((FindAndReplace.ReplaceArgs)e).InSelection;
-            int searchStart = 0;
-            int SearchEnd = GetSelectedEditor().Text.Length;
-            int Replaced = 0;
-
-            if (inSelection)
+            if (scriptTabs.SelectedTab != null)
             {
-                searchStart = GetSelectedEditor().Selection.Start;
-                SearchEnd = GetSelectedEditor().Selection.End;
-            }
-            
+                EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+                string toFind = ((FindAndReplace.ReplaceArgs)e).ToFind;
+                string toRepalce = ((FindAndReplace.ReplaceArgs)e).ToReplace;
+                bool matchCase = ((FindAndReplace.ReplaceArgs)e).MatchCase;
+                bool inSelection = ((FindAndReplace.ReplaceArgs)e).InSelection;
+                int searchStart = 0;
+                int SearchEnd = tab.editor.Text.Length;
+                int Replaced = 0;
 
-            if (GetSelectedEditor().Text.IndexOf(toFind) != -1)
-            {
-                while (searchStart <= SearchEnd)
-                {
-                    int startIndex = searchStart;
-                    int endIndex = toFind.Length;
-
-                    GetSelectedEditor().Selection.Start = startIndex;
-                    GetSelectedEditor().Selection.End = (startIndex + endIndex);
-
-                    if (String.Compare(GetSelectedEditor().Selection.Text, toFind, matchCase) == 0)
-                    {
-
-                        GetSelectedEditor().Selection.Text = toRepalce;
-                        searchStart = GetSelectedEditor().Selection.End;
-                        Replaced++;
-                    }
-                    else
-                    {
-                        GetSelectedEditor().Selection.Dispose();
-                        searchStart++;
-                    }
-                }
-                GetSelectedEditor().Selection.Dispose();
-                MessageBox.Show(Replaced.ToString() + " occurrences matching '"+toFind+"' were replaced with '"+toRepalce+"' ");
-            }
-            else
-            {
                 if (inSelection)
                 {
-                    MessageBox.Show("Nothing to replace in selection");
+                    searchStart = tab.editor.Selection.Start;
+                    SearchEnd = tab.editor.Selection.End;
+                }
+
+
+                if (tab.editor.Text.IndexOf(toFind) != -1)
+                {
+                    while (searchStart <= SearchEnd)
+                    {
+                        int startIndex = searchStart;
+                        int endIndex = toFind.Length;
+
+                        tab.editor.Selection.Start = startIndex;
+                        tab.editor.Selection.End = (startIndex + endIndex);
+
+                        if (String.Compare(tab.editor.Selection.Text, toFind, matchCase) == 0)
+                        {
+
+                            tab.editor.Selection.Text = toRepalce;
+                            searchStart = tab.editor.Selection.End;
+                            Replaced++;
+                        }
+                        else
+                        {
+                            tab.editor.Selection.Dispose();
+                            searchStart++;
+                        }
+                    }
+                    tab.editor.Selection.Dispose();
+                    MessageBox.Show(Replaced.ToString() + " occurrences matching '" + toFind + "' were replaced with '" + toRepalce + "' ");
                 }
                 else
                 {
-                    MessageBox.Show("Nothing to replace");
+                    if (inSelection)
+                    {
+                        MessageBox.Show("Nothing to replace in selection");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nothing to replace");
+                    }
                 }
             }
         }
@@ -1362,8 +1111,8 @@ namespace NWN_Script
             {
                 contextMenuStrip1.Show();
                 Point point = PointToScreen(new Point(e.X, e.Y));
-                contextMenuStrip1.Left = point.X;
-                contextMenuStrip1.Top = point.Y + contextMenuStrip1.Height;
+                contextMenuStrip1.Left = point.X + 25;
+                contextMenuStrip1.Top = point.Y + contextMenuStrip1.Height + 60;
 
                 // iterate through all the tab pages
                 for (int i = 0; i <  scriptTabs.TabCount; i++)
@@ -1386,53 +1135,28 @@ namespace NWN_Script
 
             if (scriptTabs.SelectedTab != null)
             {
-                if (((FileSettings)scriptTabs.SelectedTab.Tag).UnsvedChanges)
-                {
-                    if (MessageBox.Show("You have unsaved changes.\nAre you sure you want to close?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        scriptTabs.TabPages.Remove(scriptTabs.TabPages[scriptTabs.SelectedIndex]);
-
-                        if ((selectedIndex - 1) >= 0)
-                        {
-                            scriptTabs.SelectedIndex = (selectedIndex - 1);
-                        }
-                        else
-                        {
-                            scriptTabs.SelectedIndex = 0;
-                        }
-                    }
-
-                }
-                else
-                {
-                    scriptTabs.TabPages.Remove(scriptTabs.TabPages[scriptTabs.SelectedIndex]);
-
-                    if ((selectedIndex - 1) >= 0)
-                    {
-                        scriptTabs.SelectedIndex = (selectedIndex - 1);
-                    }
-                    else
-                    {
-                        scriptTabs.SelectedIndex = 0;
-                    }
-                }
+                ((EditorTabPage)scriptTabs.SelectedTab).CloseFile();
             }
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Clipboard.SetText(GetSelectedEditor().Selection.Text);
+
+            EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+            Clipboard.SetText(tab.editor.Selection.Text);
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Clipboard.SetText(GetSelectedEditor().Selection.Text);
-            GetSelectedEditor().Selection.Text = "";
+            EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+            Clipboard.SetText(tab.editor.Selection.Text);
+            tab.editor.Selection.Text = "";
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GetSelectedEditor().Selection.Text = System.Windows.Forms.Clipboard.GetText();
+            EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+            tab.editor.Selection.Text = Clipboard.GetText();
         }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1447,5 +1171,42 @@ namespace NWN_Script
             File.Delete("tmp_decompiled.nss");
         }
 
+        private void lightModeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ThemeManager.SetCurrentTheme(0);
+            UpdateFormTheme();
+        }
+
+        private void darkModeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ThemeManager.SetCurrentTheme(1);
+            UpdateFormTheme();
+        }
+
+        private void compileToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            CompileScript();
+        }
+
+        private void constantsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConstantsForm constantsForm = new ConstantsForm();
+
+            if (constantsForm.ShowDialog() == DialogResult.OK) //popup form is loaded here and parent form will wait for dialogresult from popup window.
+            {
+                EditorTabPage tab = (EditorTabPage)scriptTabs.SelectedTab;
+                tab.editor.Selection.Text = constantsForm.SelectedConstant;
+            }
+        }
+
+        private void splitContainer1_Paint(object sender, PaintEventArgs e)
+        {
+            ControlPaint.DrawBorder(e.Graphics, e.ClipRectangle, ThemeManager.GetControlAltBackgroundColor(), ButtonBorderStyle.Solid);
+        }
+
+        private void splitContainer2_Paint(object sender, PaintEventArgs e)
+        {
+            ControlPaint.DrawBorder(e.Graphics, e.ClipRectangle, ThemeManager.GetControlAltBackgroundColor(), ButtonBorderStyle.Solid);
+        }
     }
 }

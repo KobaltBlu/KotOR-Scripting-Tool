@@ -39,9 +39,9 @@
             // textBox1
             // 
             this.textBox1.AcceptsReturn = true;
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(16, 25);
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(16, 69);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(293, 20);
             this.textBox1.TabIndex = 0;
@@ -50,7 +50,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 9);
+            this.label1.Location = new System.Drawing.Point(13, 53);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 1;
@@ -59,7 +59,7 @@
             // btn_find
             // 
             this.btn_find.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_find.Location = new System.Drawing.Point(16, 70);
+            this.btn_find.Location = new System.Drawing.Point(16, 114);
             this.btn_find.Name = "btn_find";
             this.btn_find.Size = new System.Drawing.Size(75, 23);
             this.btn_find.TabIndex = 2;
@@ -70,7 +70,7 @@
             // btn_close
             // 
             this.btn_close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_close.Location = new System.Drawing.Point(234, 70);
+            this.btn_close.Location = new System.Drawing.Point(234, 114);
             this.btn_close.Name = "btn_close";
             this.btn_close.Size = new System.Drawing.Size(75, 23);
             this.btn_close.TabIndex = 4;
@@ -81,7 +81,7 @@
             // checkMatchCase
             // 
             this.checkMatchCase.AutoSize = true;
-            this.checkMatchCase.Location = new System.Drawing.Point(16, 50);
+            this.checkMatchCase.Location = new System.Drawing.Point(16, 94);
             this.checkMatchCase.Name = "checkMatchCase";
             this.checkMatchCase.Size = new System.Drawing.Size(82, 17);
             this.checkMatchCase.TabIndex = 5;
@@ -94,7 +94,7 @@
             this.AcceptButton = this.btn_find;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(321, 105);
+            this.ClientSize = new System.Drawing.Size(321, 149);
             this.Controls.Add(this.checkMatchCase);
             this.Controls.Add(this.btn_close);
             this.Controls.Add(this.btn_find);
@@ -102,7 +102,6 @@
             this.Controls.Add(this.textBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FindWindow";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Find";
             this.Load += new System.EventHandler(this.FindWindow_Load);
             this.ResumeLayout(false);

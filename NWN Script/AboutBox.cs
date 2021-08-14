@@ -5,10 +5,11 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using MetroFramework.Forms;
 
 namespace NWN_Script
 {
-    partial class AboutBox : Form
+    partial class AboutBox : MetroForm
     {
         public AboutBox()
         {
@@ -19,6 +20,14 @@ namespace NWN_Script
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
             this.textBoxDescription.Text = AssemblyDescription;
+            if (ThemeManager.GetCurrentTheme() == 0)
+            {
+                Theme = MetroFramework.MetroThemeStyle.Light;
+            }
+            else
+            {
+                Theme = MetroFramework.MetroThemeStyle.Dark;
+            }
         }
 
         #region Assembly Attribute Accessors

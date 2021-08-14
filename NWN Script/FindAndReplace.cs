@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using MetroFramework.Forms;
 
 namespace NWN_Script
 {
-    public partial class FindAndReplace : Form
+    public partial class FindAndReplace : MetroForm
     {
         public event EventHandler ReplaceEvent;
         public event EventHandler ReplaceAllEvent;

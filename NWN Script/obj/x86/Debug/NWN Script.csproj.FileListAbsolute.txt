@@ -271,8 +271,10 @@ C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\KotOR 
 C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\KotOR Scripting Tool.exe
 C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\KotOR Scripting Tool.pdb
 C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\FlawlessCode.dll
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\MetroFramework.Design.dll
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\MetroFramework.dll
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\MetroFramework.Fonts.dll
 C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\ScintillaNET.dll
-C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN Script.csprojResolveAssemblyReference.cache
 C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN_Script.FindAndReplace.resources
 C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN_Script.FindWindow.resources
 C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN_Script.HelpWindow.resources
@@ -286,3 +288,6 @@ C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\Ko
 C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\KotOR Scripting Tool.application
 C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\KotOR Scripting Tool.exe
 C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\KotOR Scripting Tool.pdb
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\obj\x86\Debug\NWN Script.csprojResolveAssemblyReference.cache
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Newtonsoft.Json.dll
+C:\Users\James\Documents\GitHub\KotOR-Scripting-Tool\NWN Script\bin\Debug\Newtonsoft.Json.xml

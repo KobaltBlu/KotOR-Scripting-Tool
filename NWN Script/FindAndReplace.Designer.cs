@@ -45,7 +45,7 @@
             // lbl_FindWhat
             // 
             this.lbl_FindWhat.AutoSize = true;
-            this.lbl_FindWhat.Location = new System.Drawing.Point(13, 13);
+            this.lbl_FindWhat.Location = new System.Drawing.Point(13, 55);
             this.lbl_FindWhat.Name = "lbl_FindWhat";
             this.lbl_FindWhat.Size = new System.Drawing.Size(56, 13);
             this.lbl_FindWhat.TabIndex = 0;
@@ -54,7 +54,7 @@
             // lbl_ReplaceWith
             // 
             this.lbl_ReplaceWith.AutoSize = true;
-            this.lbl_ReplaceWith.Location = new System.Drawing.Point(13, 53);
+            this.lbl_ReplaceWith.Location = new System.Drawing.Point(13, 95);
             this.lbl_ReplaceWith.Name = "lbl_ReplaceWith";
             this.lbl_ReplaceWith.Size = new System.Drawing.Size(72, 13);
             this.lbl_ReplaceWith.TabIndex = 1;
@@ -62,18 +62,18 @@
             // 
             // textBox_FindWhat
             // 
-            this.textBox_FindWhat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_FindWhat.Location = new System.Drawing.Point(13, 30);
+            this.textBox_FindWhat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_FindWhat.Location = new System.Drawing.Point(13, 72);
             this.textBox_FindWhat.Name = "textBox_FindWhat";
             this.textBox_FindWhat.Size = new System.Drawing.Size(361, 20);
             this.textBox_FindWhat.TabIndex = 2;
             // 
             // textBox_ReplaceWith
             // 
-            this.textBox_ReplaceWith.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_ReplaceWith.Location = new System.Drawing.Point(13, 70);
+            this.textBox_ReplaceWith.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_ReplaceWith.Location = new System.Drawing.Point(13, 112);
             this.textBox_ReplaceWith.Name = "textBox_ReplaceWith";
             this.textBox_ReplaceWith.Size = new System.Drawing.Size(361, 20);
             this.textBox_ReplaceWith.TabIndex = 3;
@@ -81,7 +81,7 @@
             // btn_replace
             // 
             this.btn_replace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_replace.Location = new System.Drawing.Point(16, 119);
+            this.btn_replace.Location = new System.Drawing.Point(16, 159);
             this.btn_replace.Name = "btn_replace";
             this.btn_replace.Size = new System.Drawing.Size(75, 23);
             this.btn_replace.TabIndex = 4;
@@ -104,7 +104,7 @@
             // 
             this.btn_Close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btn_Close.Location = new System.Drawing.Point(299, 119);
+            this.btn_Close.Location = new System.Drawing.Point(299, 159);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(75, 23);
             this.btn_Close.TabIndex = 6;
@@ -115,7 +115,7 @@
             // checkMatchCase
             // 
             this.checkMatchCase.AutoSize = true;
-            this.checkMatchCase.Location = new System.Drawing.Point(16, 96);
+            this.checkMatchCase.Location = new System.Drawing.Point(16, 138);
             this.checkMatchCase.Name = "checkMatchCase";
             this.checkMatchCase.Size = new System.Drawing.Size(82, 17);
             this.checkMatchCase.TabIndex = 7;
@@ -140,7 +140,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.Controls.Add(this.checkInSelection);
             this.groupBox1.Controls.Add(this.btn_ReplaceAll);
-            this.groupBox1.Location = new System.Drawing.Point(96, 110);
+            this.groupBox1.Location = new System.Drawing.Point(96, 150);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(172, 36);
             this.groupBox1.TabIndex = 10;
@@ -151,7 +151,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btn_Close;
-            this.ClientSize = new System.Drawing.Size(386, 154);
+            this.ClientSize = new System.Drawing.Size(386, 194);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.checkMatchCase);
             this.Controls.Add(this.btn_Close);
@@ -163,7 +163,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FindAndReplace";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Find and Replace";
             this.Load += new System.EventHandler(this.FindAndReplace_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FindAndReplace_KeyPress);

@@ -2,23 +2,87 @@
 <ScintillaNET>
 	<Language Name="default">
 		<Styles>
-			<Style Name="Default" FontName="Consolas" FontSize="3.25" ForeColor="BLACK" />
+			<Style Name="Default" FontName="Consolas" Size="14" ForeColor="BLACK" />
 		</Styles>
 	</Language>
-
-	<Language Name="cpp">
-		<Indentation TabWidth="2" UseTabs="false"/>
-		<Lexer StreamCommentPrefix="{ " StreamCommentSuffix=" }">
-			<Keywords List="0">int string void object action float vector location event effect if else true false while</Keywords>
-		</Lexer>
-		<Styles>
-
-			<Style Name="KEYWORD" ForeColor="BLUE" />
-			<Style Name="NUMBER" ForeColor="PURPLE" />
-			<Style Name="STRING" ForeColor="PURPLE" />
+  <Language Name="nss_light">
+    <Indentation TabWidth="2" UseTabs="true"/>
+    <Lexer LexerName="cpp" StreamCommentPrefix="{ " StreamCommentSuffix=" }" SmartIndentType="cpp">
+      <Keywords List="0">int string void object action float vector location event effect struct if else TRUE FALSE do while for switch case break return continue</Keywords>
+    </Lexer>
+    <Styles>
+      <Style Name="Default" FontName="Consolas" Size="14" ForeColor="BLACK" BackColor="#FFFFFF" />
+      <Style Name="KEYWORD" ForeColor="BLUE" />
+      <Style Name="NUMBER" ForeColor="PURPLE" />
+      <Style Name="STRING" ForeColor="PURPLE" />
       <Style Name="VERBATIM" ForeColor="PURPLE" />
       <Style Name="CLOSURE" ForeColor="PURPLE" />
 
-		</Styles>
-	</Language>
+    </Styles>
+    <Snippets>
+<Snippet Shortcut="main" IsSurroundsWith="false">
+void main() {
+  $end$
+}
+</Snippet>
+<Snippet Shortcut="intstart" IsSurroundsWith="false">
+int StartingConditional() {
+  return FALSE;$end$
+}
+</Snippet>
+    </Snippets>
+  </Language>
+  <Language Name="nss_dark">
+    <Indentation TabWidth="2" UseTabs="true"/>
+    <Lexer LexerName="cpp" StreamCommentPrefix="{ " StreamCommentSuffix=" }" SmartIndentType="cpp">
+      <Keywords List="0">int string void object action float vector location event effect struct if else TRUE FALSE do while for switch case break return continue</Keywords>
+    </Lexer>
+    <Styles>
+      <Style Name="Default" FontName="Consolas" Size="14" ForeColor="WHITESMOKE" BackColor="#1E1E1E" />
+      <Style Name="LINENUMBER"  ForeColor="CORNFLOWERBLUE" BackColor="#292929" />
+      <Style Name="KEYWORD" ForeColor="CYAN" />
+      <Style Name="NUMBER" ForeColor="LIMEGREEN" />
+      <Style Name="STRING" ForeColor="#D68F5F" />
+      <Style Name="DOUBLESTRING" ForeColor="#A31515" />
+      <Style Name="SINGLESTRING" ForeColor="#A31515" />
+      <Style Name="VERBATIM" ForeColor="CYAN" />
+      <Style Name="CLOSURE" ForeColor="PURPLE" />
+      <Style Name="PREPROCESSOR" ForeColor="OLIVE" />
+
+      <Style Name="COMMENT" ForeColor="GREEN" />
+      <Style Name="COMMENTLINE" ForeColor="GREEN" />
+      <Style Name="COMMENTDOC" ForeColor="GREEN" />
+      <Style Name="COMMENTLINEDOC" ForeColor="GREEN" />
+
+      <Style Name="PSEUDOCLASS" ForeColor="orange" />
+      <Style Name="UNKNOWN_PSEUDOCLASS" ForeColor="orange" />
+
+      <Style Name="OPERATOR" ForeColor="#DDDDDD" />
+      <Style Name="IDENTIFIER" ForeColor="#dcb962" />
+      <Style Name="VALUE" ForeColor="CYAN" />
+      <Style Name="IMPORTANT" ForeColor="YELLOW" />
+      <Style Name="CLASS" ForeColor="ORANGE"/>
+      <Style Name="WORD" ForeColor="#569CD6"/>
+      <Style Name="WORD2" ForeColor="PINK"/>
+
+      <Style Name="UNKNOWN_IDENTIFIER" ForeColor="black"/>
+      <Style Name="ID" ForeColor="cyan" />
+      <Style Name="DIRECTIVE" ForeColor="green" />
+      <Style Name="IDENTIFIER2" ForeColor="#7590FF" />
+      <Style Name="ATTRIBUTE" ForeColor="black"/>
+
+    </Styles>
+    <Snippets>
+<Snippet Shortcut="main" IsSurroundsWith="false">
+void main() {
+  $end$
+}
+</Snippet>
+<Snippet Shortcut="intstart" IsSurroundsWith="false">
+int StartingConditional() {
+  return FALSE;$end$
+}
+</Snippet>
+    </Snippets>
+  </Language>
 </ScintillaNET>
